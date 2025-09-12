@@ -35,28 +35,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="mnAlterar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Alterar"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="mnAltCliente">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Cliente"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnAltPet">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Pet"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnAltFuncionario">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Funcionario"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="mnConsulta">
           <Properties>
             <Property name="text" type="java.lang.String" value="Consulta"/>
@@ -72,6 +50,11 @@
                 <Property name="text" type="java.lang.String" value="Pet"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnConVendas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Vendas"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnItens">
@@ -82,11 +65,6 @@
             <MenuItem class="javax.swing.JMenuItem" name="mnInventario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Inventario"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnVendas">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Vendas"/>
               </Properties>
             </MenuItem>
           </SubComponents>

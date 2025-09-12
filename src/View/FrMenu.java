@@ -36,16 +36,12 @@ public class FrMenu extends javax.swing.JFrame {
         mnCadCliente = new javax.swing.JMenuItem();
         mnCadPet = new javax.swing.JMenuItem();
         mnCadFuncionario = new javax.swing.JMenuItem();
-        mnAlterar = new javax.swing.JMenu();
-        mnAltCliente = new javax.swing.JMenuItem();
-        mnAltPet = new javax.swing.JMenuItem();
-        mnAltFuncionario = new javax.swing.JMenuItem();
         mnConsulta = new javax.swing.JMenu();
         mnConCliente = new javax.swing.JMenuItem();
         mnConPet = new javax.swing.JMenuItem();
+        mnConVendas = new javax.swing.JMenuItem();
         mnItens = new javax.swing.JMenu();
         mnInventario = new javax.swing.JMenuItem();
-        mnVendas = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -93,19 +89,6 @@ public class FrMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(mnCadastro);
 
-        mnAlterar.setText("Alterar");
-
-        mnAltCliente.setText("Cliente");
-        mnAlterar.add(mnAltCliente);
-
-        mnAltPet.setText("Pet");
-        mnAlterar.add(mnAltPet);
-
-        mnAltFuncionario.setText("Funcionario");
-        mnAlterar.add(mnAltFuncionario);
-
-        jMenuBar1.add(mnAlterar);
-
         mnConsulta.setText("Consulta");
 
         mnConCliente.setText("Cliente");
@@ -114,15 +97,15 @@ public class FrMenu extends javax.swing.JFrame {
         mnConPet.setText("Pet");
         mnConsulta.add(mnConPet);
 
+        mnConVendas.setText("Vendas");
+        mnConsulta.add(mnConVendas);
+
         jMenuBar1.add(mnConsulta);
 
         mnItens.setText("Itens");
 
         mnInventario.setText("Inventario");
         mnItens.add(mnInventario);
-
-        mnVendas.setText("Vendas");
-        mnItens.add(mnVendas);
 
         jMenuBar1.add(mnItens);
 
@@ -183,19 +166,15 @@ public class FrMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JMenuItem mnAltCliente;
-    private javax.swing.JMenuItem mnAltFuncionario;
-    private javax.swing.JMenuItem mnAltPet;
-    private javax.swing.JMenu mnAlterar;
     private javax.swing.JMenuItem mnCadCliente;
     private javax.swing.JMenuItem mnCadFuncionario;
     private javax.swing.JMenuItem mnCadPet;
     private javax.swing.JMenu mnCadastro;
     private javax.swing.JMenuItem mnConCliente;
     private javax.swing.JMenuItem mnConPet;
+    private javax.swing.JMenuItem mnConVendas;
     private javax.swing.JMenu mnConsulta;
     private javax.swing.JMenuItem mnInventario;
     private javax.swing.JMenu mnItens;
-    private javax.swing.JMenuItem mnVendas;
     // End of variables declaration//GEN-END:variables
 }
