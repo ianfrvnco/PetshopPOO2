@@ -1,5 +1,5 @@
 
-package Util;
+package utils;
 
 public class Util {
     

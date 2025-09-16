@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
+package view;
 
 /**
  *
@@ -16,6 +16,7 @@ public class FrMenu extends javax.swing.JFrame {
      */
     public FrMenu() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -50,8 +51,13 @@ public class FrMenu extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         btnEncerrar.setText("Encerrar");
+        btnEncerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEncerrarMouseClicked(evt);
+            }
+        });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/imgPetMenu256px.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu256px.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -62,16 +68,16 @@ public class FrMenu extends javax.swing.JFrame {
                 .addComponent(btnEncerrar)
                 .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(151, 151, 151)
+                .addGap(150, 150, 150)
                 .addComponent(jLabel1)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(89, Short.MAX_VALUE)
+                .addContainerGap(122, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(69, 69, 69)
+                .addGap(79, 79, 79)
                 .addComponent(btnEncerrar)
                 .addContainerGap())
         );
@@ -79,12 +85,37 @@ public class FrMenu extends javax.swing.JFrame {
         mnCadastro.setText("Cadastro");
 
         mnCadCliente.setText("Cliente");
+        mnCadCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnCadClienteMouseClicked(evt);
+            }
+        });
+        mnCadCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCadClienteActionPerformed(evt);
+            }
+        });
         mnCadastro.add(mnCadCliente);
 
         mnCadPet.setText("Pet");
+        mnCadPet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnCadPetMouseClicked(evt);
+            }
+        });
         mnCadastro.add(mnCadPet);
 
         mnCadFuncionario.setText("Funcionario");
+        mnCadFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnCadFuncionarioMouseClicked(evt);
+            }
+        });
+        mnCadFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCadFuncionarioActionPerformed(evt);
+            }
+        });
         mnCadastro.add(mnCadFuncionario);
 
         jMenuBar1.add(mnCadastro);
@@ -115,15 +146,45 @@ public class FrMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mnCadClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnCadClienteMouseClicked
+        FrCadCliente telaCadCliente = new FrCadCliente(this, rootPaneCheckingEnabled);
+
+        telaCadCliente.setVisible(true);
+    }//GEN-LAST:event_mnCadClienteMouseClicked
+
+    private void mnCadPetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnCadPetMouseClicked
+        FrCadPet telaCadPet = new FrCadPet(this, rootPaneCheckingEnabled);
+
+        telaCadPet.setVisible(true);
+    }//GEN-LAST:event_mnCadPetMouseClicked
+
+    private void mnCadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnCadClienteActionPerformed
+
+    private void mnCadFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnCadFuncionarioMouseClicked
+       
+    }//GEN-LAST:event_mnCadFuncionarioMouseClicked
+
+    private void mnCadFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadFuncionarioActionPerformed
+        FrCadFuncionario telaCadFuncionario = new FrCadFuncionario(this, rootPaneCheckingEnabled);
+
+        telaCadFuncionario.setVisible(true);
+    }//GEN-LAST:event_mnCadFuncionarioActionPerformed
+
+    private void btnEncerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEncerrarMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btnEncerrarMouseClicked
 
     /**
      * @param args the command line arguments

@@ -1,4 +1,7 @@
-package View;
+package view;
+
+import controller.FuncionarioController;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -31,11 +34,11 @@ public class FrLogin extends javax.swing.JFrame {
         pnlPrincipal = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         edtEmail = new javax.swing.JTextField();
-        edtSenha = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnEntrar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        edtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tela de Login");
@@ -54,8 +57,13 @@ public class FrLogin extends javax.swing.JFrame {
         jLabel2.setText("Senha");
 
         btnEntrar.setText("Entrar");
+        btnEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEntrarMouseClicked(evt);
+            }
+        });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/imgPetMenu128px.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu128px.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -66,28 +74,27 @@ public class FrLogin extends javax.swing.JFrame {
                 .addContainerGap(129, Short.MAX_VALUE)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(153, 153, 153))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(edtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                            .addComponent(edtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                            .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                            .addComponent(edtSenha))
                         .addGap(123, 123, 123))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
                         .addComponent(btnEntrar)
-                        .addGap(186, 186, 186))))
+                        .addGap(186, 186, 186))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(152, 152, 152))))
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel3)
-                .addGap(37, 37, 37)
+                .addGap(32, 32, 32)
                 .addComponent(lblEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -97,7 +104,7 @@ public class FrLogin extends javax.swing.JFrame {
                 .addComponent(edtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(btnEntrar)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -114,6 +121,49 @@ public class FrLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseClicked
+        conectar();
+    }//GEN-LAST:event_btnEntrarMouseClicked
+
+  
+        private boolean verificarCampos() {
+        if (edtEmail.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Dados não preenchidos.");
+            return false;
+        }
+        if (new String(edtSenha.getPassword()).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Senha em Branco.");
+            return false;
+        }
+
+        return true;
+    }
+        
+    private void conectar() {
+
+        if (!verificarCampos()) {
+            return;
+        }
+        //ler campos, guardar os dados, consultar, validar
+
+        String usuario = edtEmail.getText();
+        String senha = new String(edtSenha.getPassword());
+
+        //consultar no banco de dados
+        FuncionarioController controller = new FuncionarioController();
+
+        if (controller.autenticar(usuario, senha)) {
+            //Entra no sistema
+            FrMenu telaMenu = new FrMenu ();
+            this.setVisible(false);
+            telaMenu.setVisible(true);
+
+        } else {
+            //Mensagem de funcionário não encontrado
+            JOptionPane.showMessageDialog(rootPane, "Funcionário não encontrado");
+        };
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -152,7 +202,7 @@ public class FrLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
     private javax.swing.JTextField edtEmail;
-    private javax.swing.JTextField edtSenha;
+    private javax.swing.JPasswordField edtSenha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
