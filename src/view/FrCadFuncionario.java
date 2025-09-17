@@ -6,6 +6,7 @@
 package view;
 
 import controller.FuncionarioController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +20,7 @@ public class FrCadFuncionario extends javax.swing.JDialog {
     public FrCadFuncionario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -165,7 +167,14 @@ public class FrCadFuncionario extends javax.swing.JDialog {
         String email = edtEmail.getText();
         String senha = new String(edtSenha.getPassword());
         
-        f.inserir(nome, email, senha);
+        if(f.inserir(nome, email, senha)){
+            JOptionPane.showMessageDialog(null, "Funcionario adicionado!");
+            edtNome.setText(null);
+            edtEmail.setText(null);
+            edtSenha.setText(null);
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro.");
+        };
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
     /**

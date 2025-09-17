@@ -6,6 +6,11 @@
 
 package view;
 
+import controller.FuncionarioController;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.Funcionario;
+
 /**
  *
  * @author aluno.saolucas
@@ -36,6 +41,11 @@ public class FrConFuncionario extends javax.swing.JDialog {
         btnAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -51,7 +61,7 @@ public class FrConFuncionario extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false
@@ -67,7 +77,7 @@ public class FrConFuncionario extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblPet);
 
-        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/imgPetMenu64px.png"))); // NOI18N
+        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
 
         btnVoltar.setText("Voltar");
 
@@ -93,21 +103,18 @@ public class FrConFuncionario extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(imgLogo)
                 .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(imgLogo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(imgLogo)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -130,6 +137,37 @@ public class FrConFuncionario extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        pesquisar();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void pesquisar() {
+        //Pega o modelo da grade com suas colunas
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPet.getModel();
+
+        //Limpa a grade setando o número de linhas para zero
+        modeloTabela.setNumRows(0);
+
+        //consultar o banco de dados
+        FuncionarioController controller = new FuncionarioController();
+
+        //passa os filtros pro método consultar
+        List<Funcionario> listaFuncionarios = controller.consultar();
+
+        //Preenche a grade
+        for (Funcionario f : listaFuncionarios) {
+            Object[] linha = {
+                f.getNome(),
+                f.getEmail(), 
+                f.isAtivo()
+            };
+
+            modeloTabela.addRow(linha);
+
+        }
+
+    }
+    
     /**
      * @param args the command line arguments
      */

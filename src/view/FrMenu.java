@@ -103,6 +103,11 @@ public class FrMenu extends javax.swing.JFrame {
                 mnCadPetMouseClicked(evt);
             }
         });
+        mnCadPet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCadPetActionPerformed(evt);
+            }
+        });
         mnCadastro.add(mnCadPet);
 
         mnCadFuncionario.setText("Funcionario");
@@ -136,6 +141,11 @@ public class FrMenu extends javax.swing.JFrame {
         mnItens.setText("Itens");
 
         mnInventario.setText("Inventario");
+        mnInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnInventarioActionPerformed(evt);
+            }
+        });
         mnItens.add(mnInventario);
 
         jMenuBar1.add(mnItens);
@@ -163,13 +173,13 @@ public class FrMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_mnCadClienteMouseClicked
 
     private void mnCadPetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnCadPetMouseClicked
-        FrCadPet telaCadPet = new FrCadPet(this, rootPaneCheckingEnabled);
-
-        telaCadPet.setVisible(true);
+        
     }//GEN-LAST:event_mnCadPetMouseClicked
 
     private void mnCadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadClienteActionPerformed
-        // TODO add your handling code here:
+        FrCadCliente telaCadCliente = new FrCadCliente(this, rootPaneCheckingEnabled);
+
+        telaCadCliente.setVisible(true);
     }//GEN-LAST:event_mnCadClienteActionPerformed
 
     private void mnCadFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnCadFuncionarioMouseClicked
@@ -185,6 +195,18 @@ public class FrMenu extends javax.swing.JFrame {
     private void btnEncerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEncerrarMouseClicked
         this.dispose();
     }//GEN-LAST:event_btnEncerrarMouseClicked
+
+    private void mnCadPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadPetActionPerformed
+        FrCadPet telaCadPet = new FrCadPet(this, rootPaneCheckingEnabled);
+
+        telaCadPet.setVisible(true);
+    }//GEN-LAST:event_mnCadPetActionPerformed
+
+    private void mnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnInventarioActionPerformed
+        FrConInventario telaConInventario = new FrConInventario(this, rootPaneCheckingEnabled);
+        
+        telaConInventario.setVisible(true);
+    }//GEN-LAST:event_mnInventarioActionPerformed
 
     /**
      * @param args the command line arguments

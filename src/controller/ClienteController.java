@@ -5,72 +5,22 @@
  */
 package controller;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import model.Funcionario;
+import model.Cliente;
 
-/**
- *
- * @author aluno.saolucas
- */
-public class FuncionarioController {
-    public boolean autenticar(String email, String senha) {
-
-        //Montar o comando a ser executado
-        //os ? são variáveis que são preenchidas mais adiante
-        String sql = "SELECT * from FUNCIONARIO WHERE email = ? and senha = ? and ativo = 1";
-
-        //Cria uma instância do gerenciador de conexão
-        //Conexão com o banco de dados
-        GerenciadorConexao gerenciador = new GerenciadorConexao();
-
-        //Declara as variáveis com nulas antes do try
-        //para poder usar no finally
-        PreparedStatement comando = null;
-        ResultSet resultado = null;
-
-        try {
-            //prepara o sql, analisandoi o formato e as váriaveis
-            comando = gerenciador.prepararComando(sql);
-
-            //define o valor de cada variável (?) pela posição em que aparecem
-            comando.setString(1, email);
-            comando.setString(2, senha);
-
-            //executa o comando e guarda o resultado da consulta
-            //o resultado é semelhante a uma grade
-            resultado = comando.executeQuery();
-
-            //resultado.next() - tenta avançar para a próxima linha
-            //caso consiga retorna true
-            if (resultado.next()) {
-                //Se conseguyiu acançar para a prox linha é porquê achou 
-                return true;
-            }
-        } catch (SQLException e) {
-
-            //caso ocorra um erro relacio0nado ao banco de dados
-            //exibe popup com o erro
-            JOptionPane.showMessageDialog(null, e.getMessage());
-
-        } finally {
-            //depois de executar o try, dando erro ou não executa o finally
-            gerenciador.fecharConexao(comando, resultado);
-        }
-
-        return false;
-
-    }
+public class ClienteController {
     
-    public boolean inserir(String nome, String email, String senha) {
+    public boolean inserir(Cliente c) {
 
-        //Montar o comando a ser executado
+         //Montar o comando a ser executado
         //os ? são variáveis que são preenchidas mais adiante
-        String sql = "INSERT INTO FUNCIONARIO (nome, email, senha, ativo) VALUES (?, ?, ?, 1)";
+        String sql = "INSERT INTO CLIENTE(nome, email, datanasc) VALUES (?,?,?)";
 
         //Cria uma instância do gerenciador de conexão
         //Conexão com o banco de dados
@@ -79,23 +29,21 @@ public class FuncionarioController {
         //Declara as variáveis com nulas antes do try
         //para poder usar no finally
         PreparedStatement comando = null;
-        ResultSet resultado = null;
 
         try {
             //prepara o sql, analisandoi o formato e as váriaveis
             comando = gerenciador.prepararComando(sql);
 
             //define o valor de cada variável (?) pela posição em que aparecem
-            comando.setString(1, nome);
-            comando.setString(2, email);
-            comando.setString(3, senha);
-
+            comando.setString(1, c.getNome());
+            comando.setString(2, c.getEmail());
+            comando.setDate(3, new java.sql.Date(c.getDataNasc().getTime()));
+ 
             //executa o comando e guarda o resultado da consulta
             //o resultado é semelhante a uma grade
             comando.executeUpdate();
             return true;
 
-           
         } catch (SQLException e) {
 
             //caso ocorra um erro relacio0nado ao banco de dados
@@ -104,18 +52,18 @@ public class FuncionarioController {
 
         } finally {
             //depois de executar o try, dando erro ou não executa o finally
-            gerenciador.fecharConexao(comando, resultado);
+            gerenciador.fecharConexao(comando);
         }
 
         return false;
 
     }
     
-    public List<Funcionario> consultar() {
+    public List<Cliente> consultar() {
 
         //Montar o comando a ser executado
         //os ? são variáveis que são preenchidas mais adiante
-        String sql = "SELECT * FROM FUNCIONARIO;";
+        String sql = "SELECT * FROM CLIENTE;";
 
         //Cria uma instância do gerenciador de conexão
         //Conexão com o banco de dados
@@ -127,7 +75,7 @@ public class FuncionarioController {
         ResultSet resultado = null;
 
         //Crio a lista de usuários, vazia ainda
-        List<Funcionario> lista = new ArrayList<>();
+        List<Cliente> lista = new ArrayList<>();
 
         try {
             //prepara o sql, analisandoi o formato e as váriaveis
@@ -140,13 +88,13 @@ public class FuncionarioController {
             //resultado.next() - tenta avançar para a próxima linha
             //caso consiga retorna true
             while (resultado.next()) {
-                Funcionario fu = new Funcionario();
+                Cliente cl = new Cliente();
 
-                fu.setNome(resultado.getString("Nome"));
-                fu.setEmail(resultado.getString("Email"));
-                fu.setAtivo(resultado.getBoolean("Ativo"));
+                cl.setNome(resultado.getString("nome"));
+                cl.setEmail(resultado.getString("quantidade"));
+                cl.setDataNasc(resultado.getDate("Data de Nascimento"));
 
-                lista.add(fu);
+                lista.add(cl);
             }
         } catch (SQLException e) {
 
@@ -162,4 +110,5 @@ public class FuncionarioController {
         return lista;
 
     }
+    
 }

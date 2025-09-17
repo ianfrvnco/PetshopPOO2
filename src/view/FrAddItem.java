@@ -5,6 +5,10 @@
  */
 package view;
 
+import controller.ItemController;
+import javax.swing.JOptionPane;
+import model.Item;
+
 /**
  *
  * @author aluno.saolucas
@@ -51,6 +55,11 @@ public class FrAddItem extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
 
         btnAdicionar.setText("Adicionar");
+        btnAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAdicionarMouseClicked(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
 
@@ -141,6 +150,25 @@ public class FrAddItem extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarMouseClicked
+        ItemController controller = new ItemController();
+        Item i = new Item();
+        
+        i.setNome(edtItem.getText());
+        i.setQuantidade(Integer.parseInt(edtQuantidade.getText()));
+        i.setPreco(Double.parseDouble(edtPreco.getText()));
+
+        
+        if(controller.inserir(i)){
+            JOptionPane.showMessageDialog(null, "Cliente adicionado!");
+            edtItem.setText("");
+            edtQuantidade.setText("");
+            edtPreco.setText("");
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro.");
+        };
+    }//GEN-LAST:event_btnAdicionarMouseClicked
 
     /**
      * @param args the command line arguments

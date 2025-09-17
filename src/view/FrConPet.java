@@ -5,6 +5,11 @@
  */
 package view;
 
+import controller.PetController;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.Pet;
+
 /**
  *
  * @author aluno.saolucas
@@ -37,6 +42,11 @@ public class FrConPet extends javax.swing.JDialog {
         btnAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -68,7 +78,7 @@ public class FrConPet extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblPet);
 
-        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/imgPetMenu64px.png"))); // NOI18N
+        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
 
         btnVoltar.setText("Voltar");
 
@@ -77,6 +87,11 @@ public class FrConPet extends javax.swing.JDialog {
         jLabel1.setText("Consulta de Pet");
 
         btnAlterar.setText("Alterar Pet");
+        btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAlterarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,7 +109,7 @@ public class FrConPet extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(imgLogo)
                 .addGap(20, 20, 20))
         );
@@ -106,9 +121,9 @@ public class FrConPet extends javax.swing.JDialog {
                         .addGap(20, 20, 20)
                         .addComponent(imgLogo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
+                        .addGap(45, 45, 45)
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -131,6 +146,42 @@ public class FrConPet extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlterarMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        pesquisar();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void pesquisar() {
+        //Pega o modelo da grade com suas colunas
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPet.getModel();
+
+        //Limpa a grade setando o número de linhas para zero
+        modeloTabela.setNumRows(0);
+
+        //consultar o banco de dados
+        PetController controller = new PetController();
+
+        //passa os filtros pro método consultar
+        List<Pet> listaPets = controller.consultar();
+
+        //Preenche a grade
+        for (Pet p : listaPets) {
+            Object[] linha = {
+                p.getNome(), //coluna 1
+                p.getTipo(), //coluna 2
+                p.getPelagem(), //coluna 3
+                p.getIdade()//coluna 4
+            };
+
+            modeloTabela.addRow(linha);
+
+        }
+
+    }
+    
     /**
      * @param args the command line arguments
      */

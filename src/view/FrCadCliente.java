@@ -5,6 +5,10 @@
  */
 package view;
 
+import controller.ClienteController;
+import javax.swing.JOptionPane;
+import model.Cliente;
+
 /**
  *
  * @author aluno.saolucas
@@ -17,6 +21,7 @@ public class FrCadCliente extends javax.swing.JDialog {
     public FrCadCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -63,8 +68,18 @@ public class FrCadCliente extends javax.swing.JDialog {
         imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
 
         btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCadastrarMouseClicked(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -139,6 +154,29 @@ public class FrCadCliente extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
+        ClienteController controller = new ClienteController();
+        Cliente c = new Cliente();
+        
+        c.setNome(edtNome.getText());
+        c.setEmail(edtEmail.getText());
+        c.setDataNasc(utils.Util.converterStringToDate(edtDataNasc.getText()));
+
+        
+        if(controller.inserir(c)){
+            JOptionPane.showMessageDialog(null, "Cliente adicionado!");
+            edtNome.setText("");
+            edtEmail.setText("");
+            edtDataNasc.setText("");
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro.");
+        };
+    }//GEN-LAST:event_btnCadastrarMouseClicked
+
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMouseClicked
 
     /**
      * @param args the command line arguments

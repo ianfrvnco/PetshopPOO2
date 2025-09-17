@@ -5,6 +5,10 @@
  */
 package view;
 
+import controller.PetController;
+import javax.swing.JOptionPane;
+import model.Pet;
+
 /**
  *
  * @author aluno.saolucas
@@ -17,6 +21,7 @@ public class FrCadPet extends javax.swing.JDialog {
     public FrCadPet(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -28,6 +33,7 @@ public class FrCadPet extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         edtNome = new javax.swing.JTextField();
@@ -65,13 +71,21 @@ public class FrCadPet extends javax.swing.JDialog {
         imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
 
         btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCadastrarMouseClicked(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
 
         rbtnGato.setBackground(new java.awt.Color(204, 204, 255));
+        buttonGroup1.add(rbtnGato);
+        rbtnGato.setSelected(true);
         rbtnGato.setText("Gato");
 
         rbtnCachorro.setBackground(new java.awt.Color(204, 204, 255));
+        buttonGroup1.add(rbtnCachorro);
         rbtnCachorro.setText("Cachorro");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -155,6 +169,29 @@ public class FrCadPet extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
+        PetController controller = new PetController();
+        Pet p = new Pet();
+
+        p.setNome(edtNome.getText());
+        if (rbtnGato.isSelected()) {
+            p.setTipo("Gato");
+        } else {
+            p.setTipo("Cachorro");
+        };
+        p.setPelagem(edtPelagem.getText());
+        p.setIdade(Integer.parseInt(edtIdade.getText()));
+
+        if (controller.inserir(p)) {
+            JOptionPane.showMessageDialog(null, "Pet adicionado!");
+            edtNome.setText("");
+            edtPelagem.setText("");
+            edtIdade.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro.");
+        };
+    }//GEN-LAST:event_btnCadastrarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -201,6 +238,7 @@ public class FrCadPet extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField edtIdade;
     private javax.swing.JTextField edtNome;
     private javax.swing.JTextField edtPelagem;
