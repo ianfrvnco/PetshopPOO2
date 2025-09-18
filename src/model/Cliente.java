@@ -13,16 +13,16 @@ import java.util.Date;
  */
 public class Cliente {
     
-    private int pkUsuario;
+    private int pkCliente;
     private String nome, email;
     private Date dataNasc;
 
-    public int getPkUsuario() {
-        return pkUsuario;
+    public int getPkCliente() {
+        return pkCliente;
     }
 
-    public void setPkUsuario(int pkUsuario) {
-        this.pkUsuario = pkUsuario;
+    public void setPkCliente(int pkCliente) {
+        this.pkCliente = pkCliente;
     }
 
     public String getNome() {
@@ -49,8 +49,8 @@ public class Cliente {
         this.dataNasc = dataNasc;
     }
 
-    public Cliente(int pkUsuario, String nome, String email, Date dataNasc) {
-        this.pkUsuario = pkUsuario;
+    public Cliente(int pkCliente, String nome, String email, Date dataNasc) {
+        this.pkCliente = pkCliente;
         this.nome = nome;
         this.email = email;
         this.dataNasc = dataNasc;

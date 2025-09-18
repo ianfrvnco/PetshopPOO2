@@ -67,11 +67,17 @@ public class PetController {
 
     }
     
-    public List<Pet> consultar() {
+     public List<Pet> consultar(String filtro) {
 
         //Montar o comando a ser executado
         //os ? são variáveis que são preenchidas mais adiante
-        String sql = "SELECT * FROM PET;";
+        String sql = "";
+        
+        if(filtro.equals("")){
+            sql = "SELECT * FROM PET;";
+        } else {
+            sql = "SELECT * FROM PET WHERE pkPet= "+filtro;
+        }
 
         //Cria uma instância do gerenciador de conexão
         //Conexão com o banco de dados
@@ -98,6 +104,7 @@ public class PetController {
             while (resultado.next()) {
                 Pet pe = new Pet();
 
+                pe.setPkPet(resultado.getInt("pkPet"));
                 pe.setNome(resultado.getString("Nome"));
                 pe.setTipo(resultado.getString("Tipo"));
                 pe.setPelagem(resultado.getString("Pelagem"));

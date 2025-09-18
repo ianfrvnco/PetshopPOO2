@@ -5,25 +5,30 @@
  */
 package view;
 
-import controller.ClienteController;
+import controller.PetController;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import model.Cliente;
-import utils.Util;
+import model.Pet;
 
 /**
  *
  * @author aluno.saolucas
  */
-public class FrConCliente extends javax.swing.JDialog {
+public class FrSelecionaPet extends javax.swing.JDialog {
+
+    private int pkPet;
 
     /**
-     * Creates new form FrConCliente
+     * Creates new form frSelecionaPet
      */
-    public FrConCliente(java.awt.Frame parent, boolean modal) {
+    public FrSelecionaPet(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+
+    public void setPkPet(int pkPet) {
+        this.pkPet = pkPet;
     }
 
     /**
@@ -37,12 +42,11 @@ public class FrConCliente extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCliente = new javax.swing.JTable();
+        tblPet = new javax.swing.JTable();
         imgLogo = new javax.swing.JLabel();
         btnVoltar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        btnAlterar = new javax.swing.JButton();
-        btnDefinirPets = new javax.swing.JButton();
+        btnSelecionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -53,22 +57,22 @@ public class FrConCliente extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        tblCliente.setModel(new javax.swing.table.DefaultTableModel(
+        tblPet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Código", "Nome", "Email", "Data de Nascimento"
+                "ID", "Nome", "Tipo", "Pelagem", "Idade", "Selecionar"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                true, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -79,7 +83,7 @@ public class FrConCliente extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblCliente);
+        jScrollPane1.setViewportView(tblPet);
 
         imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
 
@@ -87,19 +91,12 @@ public class FrConCliente extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Consulta de Cliente");
+        jLabel1.setText("Consulta de Pet");
 
-        btnAlterar.setText("Alterar Cliente");
-        btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnSelecionar.setText("Selecionar");
+        btnSelecionar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAlterarMouseClicked(evt);
-            }
-        });
-
-        btnDefinirPets.setText("Definir Pet(s)");
-        btnDefinirPets.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnDefinirPetsMouseClicked(evt);
+                btnSelecionarMouseClicked(evt);
             }
         });
 
@@ -107,41 +104,39 @@ public class FrConCliente extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(imgLogo)
-                .addGap(32, 32, 32))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnVoltar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAlterar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDefinirPets, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSelecionar)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(imgLogo)
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(imgLogo)))
-                .addGap(45, 45, 45)
+                        .addGap(20, 20, 20)
+                        .addComponent(imgLogo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVoltar)
-                    .addComponent(btnAlterar)
-                    .addComponent(btnDefinirPets))
+                    .addComponent(btnSelecionar))
                 .addContainerGap())
         );
 
@@ -159,70 +154,46 @@ public class FrConCliente extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        pesquisar();
-    }//GEN-LAST:event_formWindowOpened
-
-    private void btnDefinirPetsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDefinirPetsMouseClicked
-        //Valido se tem alguma linha selecionada na grade = -1
-        if (tblCliente.getSelectedRow() == -1) {
+    private void btnSelecionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelecionarMouseClicked
+        if (tblPet.getSelectedColumn(5).isSelected()) {
             return; //encerro a função
         }
 
         //pego o número da linha selecionada
-        int posicaoLinha = tblCliente.getSelectedRow();
+        int posicaoLinha = tblPet.getSelectedRow();
 
         //pegar o valor da célula na grade, na coluna 0 (Código)
-        String celula = tblCliente.getValueAt(posicaoLinha, 0).toString();
+        String celula = tblPet.getValueAt(posicaoLinha, 0).toString();
 
-        int pkCliente = Integer.parseInt(celula);
+        int pkPet = Integer.parseInt(celula);
 
         FrRelacionando telaRelacaoPetCliente = new FrRelacionando(null, rootPaneCheckingEnabled);
 
-        telaRelacaoPetCliente.setPkCliente(pkCliente);
+        telaRelacaoPetCliente.setPkPet(pkPet);
         telaRelacaoPetCliente.setVisible(true);
         pesquisar();
-    }//GEN-LAST:event_btnDefinirPetsMouseClicked
+    }//GEN-LAST:event_btnSelecionarMouseClicked
 
-    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
-        //Valido se tem alguma linha selecionada na grade = -1
-    if (tblCliente.getSelectedRow() == -1) {
-      return; //encerro a função
-    }    
-    
-    //pego o número da linha selecionada
-    int posicaoLinha = tblCliente.getSelectedRow();
-    
-    //pegar o valor da célula na grade, na coluna 0 (Código)
-    String celula = tblCliente.getValueAt(posicaoLinha, 0).toString();
-    
-    int pkCliente = Integer.parseInt(celula);
-    
-    FrAltCliente telaAlterar = new FrAltCliente(null, rootPaneCheckingEnabled);
-    //passo pra tela e alteração o código do usuário selecionado
-    telaAlterar.setPkCliente(pkCliente);
-    telaAlterar.setVisible(true);
-    
-    //Quando fechar a janela de alterar vai continuar aqui
-    //refazendo a pesquisa da grade para atualizar
-    pesquisar();
-    }//GEN-LAST:event_btnAlterarMouseClicked
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        pesquisar();
+    }//GEN-LAST:event_formWindowOpened
 
     private void pesquisar() {
 
-        DefaultTableModel modeloTabela = (DefaultTableModel) tblCliente.getModel();
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPet.getModel();
 
         modeloTabela.setNumRows(0);
 
-        ClienteController controller = new ClienteController();
-        List<Cliente> listaClientes = controller.consultar("");
+        PetController controller = new PetController();
+        List<Pet> listaClientes = controller.consultar("");
 
-        for (Cliente c : listaClientes) {
+        for (Pet p : listaClientes) {
             Object[] linha = {
-                c.getPkCliente(),
-                c.getNome(),
-                c.getEmail(),
-                Util.converterDateToString(c.getDataNasc())
+                p.getPkPet(),
+                p.getNome(),
+                p.getTipo(),
+                p.getPelagem(),
+                p.getIdade()
             };
 
             modeloTabela.addRow(linha);
@@ -247,20 +218,21 @@ public class FrConCliente extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrConCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrSelecionaPet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrConCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrSelecionaPet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrConCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrSelecionaPet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrConCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrSelecionaPet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrConCliente dialog = new FrConCliente(new javax.swing.JFrame(), true);
+                FrSelecionaPet dialog = new FrSelecionaPet(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -273,13 +245,12 @@ public class FrConCliente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnDefinirPets;
+    private javax.swing.JButton btnSelecionar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblCliente;
+    private javax.swing.JTable tblPet;
     // End of variables declaration//GEN-END:variables
 }

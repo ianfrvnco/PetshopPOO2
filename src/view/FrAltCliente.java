@@ -5,19 +5,32 @@
  */
 package view;
 
+import controller.ClienteController;
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Cliente;
+import utils.Util;
+
 /**
  *
  * @author aluno.saolucas
  */
 public class FrAltCliente extends javax.swing.JDialog {
-
+    
+    private int pkCliente;
+    
     /**
      * Creates new form FrAltCliente
      */
     public FrAltCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
+    
+    public void setPkCliente(int pkCliente) {
+    this.pkCliente = pkCliente;
+  }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,10 +56,15 @@ public class FrAltCliente extends javax.swing.JDialog {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/imgPetMenu64px.png"))); // NOI18N
+        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -71,6 +89,11 @@ public class FrAltCliente extends javax.swing.JDialog {
         lblDataNasc.setText("Data de Nascimento");
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAlterarMouseClicked(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
 
@@ -78,31 +101,27 @@ public class FrAltCliente extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(edtNome)
-                    .addComponent(edtEmail)
-                    .addComponent(edtDataNasc)
-                    .addComponent(edtCodigo)
-                    .addComponent(lblCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDataNasc, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(81, Short.MAX_VALUE)
-                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(imgLogo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(btnVoltar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAlterar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
+                        .addComponent(btnAlterar))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(imgLogo))
+                        .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(edtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(edtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
+            .addComponent(lblCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,11 +131,11 @@ public class FrAltCliente extends javax.swing.JDialog {
                         .addGap(22, 22, 22)
                         .addComponent(imgLogo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(39, 39, 39)
                         .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(38, 38, 38)
+                .addGap(31, 31, 31)
                 .addComponent(lblCodigo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(edtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(lblNome)
@@ -130,7 +149,7 @@ public class FrAltCliente extends javax.swing.JDialog {
                 .addComponent(lblDataNasc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(edtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAlterar)
                     .addComponent(btnVoltar))
@@ -151,6 +170,67 @@ public class FrAltCliente extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
+        alterar();
+    }//GEN-LAST:event_btnAlterarMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+     
+    //Carregar os dados do usuário
+    ClienteController controller = new ClienteController();
+
+    //consultei os usuários com o código igual ao que recebi 
+    // na tela de consulta
+    List<Cliente> lista = controller.consultar(String.valueOf(pkCliente));
+
+    Cliente c = null;
+    c = lista.get(0);
+
+    //Preencher os campos como a variável usu
+    edtCodigo.setText(String.valueOf(c.getPkCliente()));
+    edtNome.setText(c.getNome());
+    edtEmail.setText(c.getEmail());
+    edtDataNasc.setText(
+    Util.converterDateToString(c.getDataNasc()));
+    }//GEN-LAST:event_formWindowOpened
+
+    private void alterar() {
+    //validar o preenchimento dos campos
+    if (!verificarCampos()) {
+      return;
+    }
+
+    //ler os campos e guardar num objeto
+    Cliente c = new Cliente();
+    c.setPkCliente(Integer.parseInt(edtCodigo.getText()));
+    c.setNome(edtNome.getText());
+    c.setEmail(edtEmail.getText());
+    c.setDataNasc(Util.converterStringToDate(edtDataNasc.getText()));
+
+    //enviar para o banco de dados
+    ClienteController controller = new ClienteController();
+    if (controller.alterar(c)) {
+      JOptionPane.showMessageDialog(null, "Usuário alterado");
+      this.dispose();
+    }
+  }
+    
+    private boolean verificarCampos() {
+    if (edtNome.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Campo 'Nome' em branco");
+      return false;
+    }
+    if (edtEmail.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Campo 'E-mail' em branco");
+      return false;
+    }
+    if (edtDataNasc.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Campo 'Data de Nascimento' em branco");
+      return false;
+    }
+    return true;
+  }
+    
     /**
      * @param args the command line arguments
      */
