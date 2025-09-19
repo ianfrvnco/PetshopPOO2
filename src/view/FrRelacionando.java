@@ -6,8 +6,11 @@
 package view;
 
 import controller.ClienteController;
+import controller.ClientePetController;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import model.Cliente;
+import model.Pet;
 import utils.Util;
 
 /**
@@ -93,6 +96,11 @@ public class FrRelacionando extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblPets);
 
         btnRelacionarPet.setText("Relacionar Pet(s)");
+        btnRelacionarPet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRelacionarPetMouseClicked(evt);
+            }
+        });
 
         btnSalvar.setText("Salvar");
 
@@ -158,6 +166,8 @@ public class FrRelacionando extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVoltarMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblPets.getModel();
         //Carregar os dados do usuário
         ClienteController controller = new ClienteController();
 
@@ -170,7 +180,27 @@ public class FrRelacionando extends javax.swing.JDialog {
 
         //Preencher os campos como a variável usu
         edtNome.setText(c.getNome());
+
+        ClientePetController controllerPC = new ClientePetController();
+
+        List<Pet> listaClientes = controllerPC.consultar(String.valueOf(pkCliente));
+
+        for (Pet p : listaClientes) {
+            Object[] linha = {
+                p.getPkPet(),
+                p.getNome()
+            };
+
+            modeloTabela.addRow(linha);
+
+        }
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnRelacionarPetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRelacionarPetMouseClicked
+        FrSelecionaPet telaAlterar = new FrSelecionaPet(null, rootPaneCheckingEnabled);
+        //passo pra tela e alteração o código do usuário selecionado
+        telaAlterar.setVisible(true);
+    }//GEN-LAST:event_btnRelacionarPetMouseClicked
 
     /**
      * @param args the command line arguments

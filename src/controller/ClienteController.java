@@ -125,7 +125,7 @@ public class ClienteController {
         String sql = "UPDATE CLIENTE SET "
                 + " nome = ?, " 
                 + " email = ?, " 
-                + " datanasc = ?, "
+                + " dataNasc = ? "
                 + " WHERE pkCliente = ? ";
 
 
@@ -142,14 +142,15 @@ public class ClienteController {
             comando = gerenciador.prepararComando(sql);
 
             //define o valor de cada variável(?) pela posição em que aparece no sql
+            //comando.setInt(1, c.getPkCliente());
             comando.setString(1, c.getNome());
             comando.setString(2, c.getEmail());
             comando.setDate(3, new java.sql.Date(c.getDataNasc().getTime()));
-
             comando.setInt(4, c.getPkCliente());
 
             //executa o comando 
             comando.executeUpdate();
+            
             return true;
         } catch (SQLException e) {
             //caso ocorra um erro relacionado ao banco de dados

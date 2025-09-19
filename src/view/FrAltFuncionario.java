@@ -5,11 +5,20 @@
  */
 package view;
 
+import controller.FuncionarioController;
+import java.awt.Color;
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Funcionario;
+import utils.Util;
+
 /**
  *
  * @author aluno.saolucas
  */
 public class FrAltFuncionario extends javax.swing.JDialog {
+
+    private int pkFuncionario;
 
     /**
      * Creates new form FrAltFuncionario
@@ -17,6 +26,11 @@ public class FrAltFuncionario extends javax.swing.JDialog {
     public FrAltFuncionario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+
+    public void setPkFuncionario(int pkFuncionario) {
+        this.pkFuncionario = pkFuncionario;
     }
 
     /**
@@ -34,23 +48,32 @@ public class FrAltFuncionario extends javax.swing.JDialog {
         edtCodigo = new javax.swing.JTextField();
         edtNome = new javax.swing.JTextField();
         edtEmail = new javax.swing.JTextField();
-        edtDataNasc = new javax.swing.JTextField();
         lblCodigo = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
-        lblDataNasc = new javax.swing.JLabel();
         btnAlterar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
+        rbtnAtivo = new javax.swing.JCheckBox();
+        lblSenha = new javax.swing.JLabel();
+        lblSenhaConfirma = new javax.swing.JLabel();
+        btnAlterarSenha = new javax.swing.JButton();
+        edtSenha = new javax.swing.JPasswordField();
+        edtSenhaConfirma = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/imgPetMenu64px.png"))); // NOI18N
+        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Alterar Cliente");
+        lblTitulo.setText("Alterar Funcionario");
 
         edtCodigo.setEditable(false);
 
@@ -66,39 +89,75 @@ public class FrAltFuncionario extends javax.swing.JDialog {
         lblEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEmail.setText("Email");
 
-        lblDataNasc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblDataNasc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDataNasc.setText("Data de Nascimento");
-
         btnAlterar.setText("Alterar");
+        btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAlterarMouseClicked(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
+
+        rbtnAtivo.setBackground(new java.awt.Color(204, 204, 255));
+        rbtnAtivo.setText("Ativo");
+
+        lblSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSenha.setText("Senha");
+
+        lblSenhaConfirma.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblSenhaConfirma.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSenhaConfirma.setText("Confirmar Senha");
+
+        btnAlterarSenha.setText("Alterar senha");
+        btnAlterarSenha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAlterarSenhaMouseClicked(evt);
+            }
+        });
+
+        edtSenha.setEditable(false);
+        edtSenha.setBackground(new java.awt.Color(255, 255, 255));
+
+        edtSenhaConfirma.setEditable(false);
+        edtSenhaConfirma.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(edtNome)
-                    .addComponent(edtEmail)
-                    .addComponent(edtDataNasc)
-                    .addComponent(edtCodigo)
-                    .addComponent(lblCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDataNasc, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(100, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblSenhaConfirma, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                            .addComponent(lblSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(edtSenha)
+                            .addComponent(edtSenhaConfirma, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAlterarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(edtCodigo)
+                            .addComponent(lblCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+                        .addGap(73, 73, 73)
+                        .addComponent(rbtnAtivo))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                            .addComponent(edtEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(edtNome, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(77, 77, 77))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(107, Short.MAX_VALUE)
-                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(imgLogo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addGap(27, 27, 27)
                         .addComponent(btnVoltar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAlterar)))
@@ -109,16 +168,18 @@ public class FrAltFuncionario extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addContainerGap()
                         .addComponent(imgLogo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(29, 29, 29)
                         .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(9, 9, 9)
+                .addGap(18, 18, 18)
                 .addComponent(lblCodigo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(edtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbtnAtivo))
+                .addGap(18, 18, 18)
                 .addComponent(lblNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -127,14 +188,20 @@ public class FrAltFuncionario extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(lblDataNasc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(edtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(lblSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlterarSenha))
+                .addGap(18, 18, 18)
+                .addComponent(lblSenhaConfirma)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(edtSenhaConfirma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAlterar)
                     .addComponent(btnVoltar))
-                .addContainerGap())
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,12 +214,137 @@ public class FrAltFuncionario extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        //Carregar os dados do usuário
+        FuncionarioController controller = new FuncionarioController();
+
+        //consultei os usuários com o código igual ao que recebi 
+        // na tela de consulta
+        List<Funcionario> lista = controller.consultar(String.valueOf(pkFuncionario));
+
+        Funcionario f = null;
+        f = lista.get(0);
+
+        //Preencher os campos como a variável usu
+        edtCodigo.setText(String.valueOf(f.getPkFuncionario()));
+        edtNome.setText(f.getNome());
+        edtEmail.setText(f.getEmail());
+        rbtnAtivo.setSelected(f.isAtivo());
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnAlterarSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarSenhaMouseClicked
+         
+        if (edtSenha.isEditable()) {
+            edtSenha.setEditable(false);
+            edtSenhaConfirma.setEditable(false);
+            edtSenha.setBackground(Color.GRAY);
+            edtSenhaConfirma.setBackground(Color.GRAY);
+
+            edtSenha.setText("");
+            edtSenhaConfirma.setText("");
+
+            btnAlterarSenha.setText("Alterar Senha");
+        } else {
+            edtSenha.setEditable(true);
+            edtSenhaConfirma.setEditable(true);
+            edtSenha.setBackground(Color.WHITE);
+            edtSenhaConfirma.setBackground(Color.WHITE);
+
+            btnAlterarSenha.setText("Cancelar");
+        }
+    }//GEN-LAST:event_btnAlterarSenhaMouseClicked
+
+    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
+        gravar();
+    }//GEN-LAST:event_btnAlterarMouseClicked
+
+    private void gravar() {
+        //validar os campos
+
+        if (!verificarCampos()) {
+            return;
+        }
+        //ler os campos
+        //guardar em um objeto
+
+        Funcionario f = new Funcionario();
+        f.setPkFuncionario(Integer.parseInt(edtCodigo.getText()));
+        f.setNome(edtNome.getText());
+        f.setEmail(edtEmail.getText());
+        f.setAtivo(rbtnAtivo.isSelected());
+        
+
+        // enviar para o banco de dados
+        FuncionarioController controller = new FuncionarioController();
+        if (controller.alterar(f)) {
+            JOptionPane.showMessageDialog(null, "Usuário atualizado.");
+            this.dispose();
+        }
+
+    }
+
+    private boolean verificarCampos() {
+
+        String senha = new String(edtSenha.getPassword());
+        String confirmaSenha = new String(edtSenhaConfirma.getPassword());
+
+        if (edtNome.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo 'Nome' em branco.");
+            return false;
+        }
+
+        if (edtNome.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo 'Email' em branco.");
+            return false;
+        }
+
+        if (edtSenha.isEditable()) {
+            if (new String(edtSenha.getPassword()).isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Campo 'Senha'em branco.");
+                return false;
+            }
+        }
+
+        //^ - Inicio de linha
+        //$ - Final de linha
+        //[] - Conjunto de caracteres
+        //+ - quantidade de vezes que o conjunto pode aparecer
+        //+ - pelo menos 1 vez
+        //* - 0 ou várias vezes o conjunto se repete
+        //{X} - Especificamente X vezes
+        if (!edtNome.getText().matches("[\\p{L} ]+$")) {
+            JOptionPane.showMessageDialog(null, "O campo 'Nome' possui formato inválido");
+            return false;
+        }
+
+        if (!edtEmail.getText().matches("^[a-z0-9_.]+@[a-z0-9_.]+.[a-z]+$")) {
+            JOptionPane.showMessageDialog(null, "O campo 'Email' possui formato inválido");
+            return false;
+        }
+
+        if (edtSenha.isEditable()) {
+            if (senha.length() < 6) {
+                JOptionPane.showMessageDialog(null, "A senha deve ser maior que 6 dígitos.");
+                return false;
+            }
+        }
+
+        if (!senha.equals(confirmaSenha)) {
+            JOptionPane.showMessageDialog(null, "As senhas devem ser idênticas.");
+            return false;
+        }
+
+        return true;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -197,17 +389,21 @@ public class FrAltFuncionario extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnAlterarSenha;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JTextField edtCodigo;
-    private javax.swing.JTextField edtDataNasc;
     private javax.swing.JTextField edtEmail;
     private javax.swing.JTextField edtNome;
+    private javax.swing.JPasswordField edtSenha;
+    private javax.swing.JPasswordField edtSenhaConfirma;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCodigo;
-    private javax.swing.JLabel lblDataNasc;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblSenha;
+    private javax.swing.JLabel lblSenhaConfirma;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JCheckBox rbtnAtivo;
     // End of variables declaration//GEN-END:variables
 }

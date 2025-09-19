@@ -155,20 +155,15 @@ public class FrSelecionaPet extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelecionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelecionarMouseClicked
-        if (tblPet.getSelectedColumn(5).isSelected()) {
-            return; //encerro a função
-        }
 
         //pego o número da linha selecionada
         int posicaoLinha = tblPet.getSelectedRow();
 
-        //pegar o valor da célula na grade, na coluna 0 (Código)
-        String celula = tblPet.getValueAt(posicaoLinha, 0).toString();
-
-        int pkPet = Integer.parseInt(celula);
+        //Seleciona o ID do Pet, na coluna 0, e salva em um objeto
 
         FrRelacionando telaRelacaoPetCliente = new FrRelacionando(null, rootPaneCheckingEnabled);
 
+        //retorna o objeto para a próxima tela
         telaRelacaoPetCliente.setPkPet(pkPet);
         telaRelacaoPetCliente.setVisible(true);
         pesquisar();

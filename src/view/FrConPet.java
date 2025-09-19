@@ -22,6 +22,7 @@ public class FrConPet extends javax.swing.JDialog {
     public FrConPet(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -52,20 +53,20 @@ public class FrConPet extends javax.swing.JDialog {
 
         tblPet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Tipo", "Pelagem", "Idade"
+                "Código", "Nome", "Tipo", "Pelagem", "Idade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -147,7 +148,26 @@ public class FrConPet extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
-        // TODO add your handling code here:
+        //Valido se tem alguma linha selecionada na grade = -1
+        if (tblPet.getSelectedRow() == -1) {
+            return; //encerro a função
+        }
+
+        //pego o número da linha selecionada
+        int posicaoLinha = tblPet.getSelectedRow();
+
+        //pegar o valor da célula na grade, na coluna 0 (Código)
+        String celula = tblPet.getValueAt(posicaoLinha, 0).toString();
+
+        int pkPet = Integer.parseInt(celula);
+        FrAltPet telaAlterar = new FrAltPet(null, rootPaneCheckingEnabled);
+        //passo pra tela e alteração o código do usuário selecionado
+        telaAlterar.setPkPet(pkPet);
+        telaAlterar.setVisible(true);
+
+        //Quando fechar a janela de alterar vai continuar aqui
+        //refazendo a pesquisa da grade para atualizar
+        pesquisar();
     }//GEN-LAST:event_btnAlterarMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -165,15 +185,16 @@ public class FrConPet extends javax.swing.JDialog {
         PetController controller = new PetController();
 
         //passa os filtros pro método consultar
-        List<Pet> listaPets = controller.consultar();
+        List<Pet> listaPets = controller.consultar("");
 
         //Preenche a grade
         for (Pet p : listaPets) {
             Object[] linha = {
-                p.getNome(), //coluna 1
-                p.getTipo(), //coluna 2
-                p.getPelagem(), //coluna 3
-                p.getIdade()//coluna 4
+                p.getPkPet(),
+                p.getNome(), 
+                p.getTipo(), 
+                p.getPelagem(), 
+                p.getIdade()
             };
 
             modeloTabela.addRow(linha);

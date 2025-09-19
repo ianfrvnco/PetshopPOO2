@@ -111,11 +111,17 @@ public class FuncionarioController {
 
     }
     
-    public List<Funcionario> consultar() {
+    public List<Funcionario> consultar(String filtro) {
 
         //Montar o comando a ser executado
         //os ? são variáveis que são preenchidas mais adiante
-        String sql = "SELECT * FROM FUNCIONARIO;";
+        String sql = "";
+        
+        if (filtro.equals("")) {
+            sql = "SELECT * FROM FUNCIONARIO;";
+        } else {
+            sql = "SELECT * FROM FUNCIONARIO WHERE pkFuncionario= " + filtro;
+        }
 
         //Cria uma instância do gerenciador de conexão
         //Conexão com o banco de dados
@@ -142,9 +148,11 @@ public class FuncionarioController {
             while (resultado.next()) {
                 Funcionario fu = new Funcionario();
 
+                fu.setPkFuncionario(resultado.getInt("pkFuncionario"));
                 fu.setNome(resultado.getString("Nome"));
                 fu.setEmail(resultado.getString("Email"));
                 fu.setAtivo(resultado.getBoolean("Ativo"));
+                fu.setSenha(resultado.getString("Senha"));
 
                 lista.add(fu);
             }
@@ -161,5 +169,51 @@ public class FuncionarioController {
 
         return lista;
 
+    }
+    
+    public boolean alterar(Funcionario f) {
+        //Montar o comando a ser executado
+        //os ? são variáveis que são preenchidas mais adiante
+        String sql = "UPDATE FUNCIONARIO SET "
+                + " nome = ?, " 
+                + " email = ?, " 
+                + " senha = ?, "
+                + " ativo = ?  " 
+                + " WHERE pkFuncionario = ? ";
+
+
+        //Cria uma instância do gerenciador de conexão
+        //(conexão com o banco de dados),
+        GerenciadorConexao gerenciador = new GerenciadorConexao();
+
+        //Declara as variáveis como nulas antes do try 
+        //para poder usar no finally
+        PreparedStatement comando = null;
+
+        try {
+            //prepara o sql, analisando o formato e as váriaveis
+            comando = gerenciador.prepararComando(sql);
+
+            //define o valor de cada variável(?) pela posição em que aparece no sql
+            //comando.setInt(1, c.getPkCliente());
+            comando.setString(1, f.getNome());
+            comando.setString(2, f.getEmail());
+            comando.setString(3, f.getSenha());
+            comando.setBoolean(4, f.isAtivo());
+            comando.setInt(5, f.getPkFuncionario());
+
+            //executa o comando 
+            comando.executeUpdate();
+            
+            return true;
+        } catch (SQLException e) {
+            //caso ocorra um erro relacionado ao banco de dados
+            //exibe popup com o erro
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            //depois de executar o try, dando erro ou não executa o finally
+            gerenciador.fecharConexao(comando);
+        }
+        return false;
     }
 }

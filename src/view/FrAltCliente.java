@@ -210,7 +210,7 @@ public class FrAltCliente extends javax.swing.JDialog {
     //enviar para o banco de dados
     ClienteController controller = new ClienteController();
     if (controller.alterar(c)) {
-      JOptionPane.showMessageDialog(null, "Usuário alterado");
+      JOptionPane.showMessageDialog(null, "Cliente alterado");
       this.dispose();
     }
   }
