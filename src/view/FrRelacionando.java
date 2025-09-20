@@ -55,6 +55,7 @@ public class FrRelacionando extends javax.swing.JDialog {
         btnRelacionarPet = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
+        edtCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -82,7 +83,7 @@ public class FrRelacionando extends javax.swing.JDialog {
                 java.lang.Integer.class, java.lang.Object.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true
+                false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -103,6 +104,11 @@ public class FrRelacionando extends javax.swing.JDialog {
         });
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseClicked(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
         btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -110,6 +116,8 @@ public class FrRelacionando extends javax.swing.JDialog {
                 btnVoltarMouseClicked(evt);
             }
         });
+
+        edtCodigo.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,24 +131,27 @@ public class FrRelacionando extends javax.swing.JDialog {
                 .addGap(44, 44, 44))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(95, 95, 95)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRelacionarPet))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(101, Short.MAX_VALUE))
+                        .addComponent(edtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRelacionarPet)))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
+                .addGap(102, 102, 102)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRelacionarPet))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnVoltar))
@@ -168,6 +179,7 @@ public class FrRelacionando extends javax.swing.JDialog {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
         DefaultTableModel modeloTabela = (DefaultTableModel) tblPets.getModel();
+        modeloTabela.setNumRows(0);
         //Carregar os dados do usuário
         ClienteController controller = new ClienteController();
 
@@ -179,6 +191,7 @@ public class FrRelacionando extends javax.swing.JDialog {
         c = lista.get(0);
 
         //Preencher os campos como a variável usu
+        edtCodigo.setText(String.valueOf(c.getPkCliente()));
         edtNome.setText(c.getNome());
 
         ClientePetController controllerPC = new ClientePetController();
@@ -188,7 +201,8 @@ public class FrRelacionando extends javax.swing.JDialog {
         for (Pet p : listaClientes) {
             Object[] linha = {
                 p.getPkPet(),
-                p.getNome()
+                p.getNome(),
+                true
             };
 
             modeloTabela.addRow(linha);
@@ -200,7 +214,58 @@ public class FrRelacionando extends javax.swing.JDialog {
         FrSelecionaPet telaAlterar = new FrSelecionaPet(null, rootPaneCheckingEnabled);
         //passo pra tela e alteração o código do usuário selecionado
         telaAlterar.setVisible(true);
+        List<Pet> listaPets = telaAlterar.getListaPets();
+
+        if (listaPets != null) {
+            DefaultTableModel modeloTabela = (DefaultTableModel) tblPets.getModel();
+            
+            for (Pet p : listaPets) {
+                Object[] linha = {
+                    p.getPkPet(),
+                    p.getNome(),
+                    true
+                };
+
+                modeloTabela.addRow(linha);
+
+            }
+        
+        }
     }//GEN-LAST:event_btnRelacionarPetMouseClicked
+
+    private void btnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseClicked
+        definir();
+    }//GEN-LAST:event_btnSalvarMouseClicked
+
+    public boolean verificarCheckbox(int linha) {
+        Object valor = tblPets.getValueAt(linha, 2);
+        if (valor instanceof Boolean) {
+            return (Boolean) valor;
+        }
+        return false;
+    }
+
+    public void definir() {
+        // int posicaoLinha = tblPets.getSelectedRow();
+        //  String celula = tblPets.getValueAt(posicaoLinha, 0).toString(); 
+        //  int pkCliente = Integer.parseInt(celula);
+
+        ClientePetController controllerPC = new ClientePetController();
+        Cliente c = new Cliente();
+        c.setPkCliente(pkCliente);
+
+        for (int i = 0; i < tblPets.getRowCount(); i++) {
+            String celula = tblPets.getValueAt(i, 0).toString();
+            int pkPet = Integer.parseInt(celula);
+
+            Pet p = new Pet();
+            p.setPkPet(pkPet);
+            boolean checkBox = verificarCheckbox(i);
+
+            controllerPC.definir(p, c, checkBox);
+        }
+        this.dispose();
+    }
 
     /**
      * @param args the command line arguments
@@ -248,6 +313,7 @@ public class FrRelacionando extends javax.swing.JDialog {
     private javax.swing.JButton btnRelacionarPet;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JTextField edtCodigo;
     private javax.swing.JTextField edtNome;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

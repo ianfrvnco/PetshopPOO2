@@ -6,7 +6,9 @@
 package view;
 
 import controller.PetController;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Pet;
 
@@ -16,7 +18,16 @@ import model.Pet;
  */
 public class FrSelecionaPet extends javax.swing.JDialog {
 
-    private int pkPet;
+    private List<Pet> listaPets;
+
+    public List<Pet> getListaPets() {
+        return listaPets;
+    }
+
+    public void setListaPets(List<Pet> listaPets) {
+        this.listaPets = listaPets;
+    }
+
 
     /**
      * Creates new form frSelecionaPet
@@ -27,9 +38,7 @@ public class FrSelecionaPet extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
     }
 
-    public void setPkPet(int pkPet) {
-        this.pkPet = pkPet;
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,10 +78,10 @@ public class FrSelecionaPet extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false, true
+                false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -156,23 +165,31 @@ public class FrSelecionaPet extends javax.swing.JDialog {
 
     private void btnSelecionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSelecionarMouseClicked
 
-        //pego o número da linha selecionada
-        int posicaoLinha = tblPet.getSelectedRow();
-
-        //Seleciona o ID do Pet, na coluna 0, e salva em um objeto
-
-        FrRelacionando telaRelacaoPetCliente = new FrRelacionando(null, rootPaneCheckingEnabled);
-
-        //retorna o objeto para a próxima tela
-        telaRelacaoPetCliente.setPkPet(pkPet);
-        telaRelacaoPetCliente.setVisible(true);
-        pesquisar();
+        selecionar();
+        this.dispose();
     }//GEN-LAST:event_btnSelecionarMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         pesquisar();
     }//GEN-LAST:event_formWindowOpened
 
+    private void selecionar(){
+        
+        listaPets = new ArrayList<>();
+        for (int i = 0; i < tblPet.getRowCount(); i++) {
+            String celula =  tblPet.getValueAt(i, 5).toString();
+            
+            boolean selecionado = Boolean.parseBoolean(celula);
+            if(selecionado){
+                
+                Pet p = (Pet) tblPet.getValueAt(i, 1);
+            
+                listaPets.add(p);
+            }
+        }
+        
+    }
+    
     private void pesquisar() {
 
         DefaultTableModel modeloTabela = (DefaultTableModel) tblPet.getModel();
@@ -180,15 +197,16 @@ public class FrSelecionaPet extends javax.swing.JDialog {
         modeloTabela.setNumRows(0);
 
         PetController controller = new PetController();
-        List<Pet> listaClientes = controller.consultar("");
+        List<Pet> listaPets = controller.consultar("");
 
-        for (Pet p : listaClientes) {
+        for (Pet p : listaPets) {
             Object[] linha = {
                 p.getPkPet(),
-                p.getNome(),
+                p,
                 p.getTipo(),
                 p.getPelagem(),
-                p.getIdade()
+                p.getIdade(),
+                false
             };
 
             modeloTabela.addRow(linha);

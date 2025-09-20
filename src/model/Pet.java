@@ -64,5 +64,7 @@ public class Pet {
         this.pelagem = pelagem;
     }
     
-    
+    public String toString(){
+        return nome;
+    }
 }

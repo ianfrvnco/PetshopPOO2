@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import model.Cliente;
 import model.Pet;
 
 /**
@@ -18,12 +19,13 @@ import model.Pet;
  * @author aluno.saolucas
  */
 public class ClientePetController {
-    
+
     public List<Pet> consultar(String idCliente) {
 
         //Montar o comando a ser executado
         //os ? são variáveis que são preenchidas mais adiante
-        String sql = "SELECT p.* FROM PET p INNER JOIN relacao r on r.fkPet = p.pkPet WHERE fkCliente= "+idCliente;
+        String sql = "SELECT p.* FROM PET p INNER JOIN relacao r on r.fk_pkPet = p.pkPet "
+                + "WHERE fk_pkCliente= " + idCliente;
 
         //Cria uma instância do gerenciador de conexão
         //Conexão com o banco de dados
@@ -70,6 +72,55 @@ public class ClientePetController {
         }
 
         return lista;
+
+    }
+
+    public boolean definir(Pet p, Cliente c, boolean checkBox) {
+
+        String sql = "";
+        if (checkBox) {
+            sql = "INSERT INTO relacao (fk_pkCliente, fk_pkPet)\n"
+                    + "VALUES (?, ?)\n"
+                    + "ON DUPLICATE KEY UPDATE fk_pkPet = VALUES(fk_pkPet);";
+        } else {
+            sql = "DELETE FROM relacao WHERE fk_pkCliente = ? and fk_pkPet = ?;";
+        }
+
+        //Cria uma instância do gerenciador de conexão
+        //Conexão com o banco de dados
+        GerenciadorConexao gerenciador = new GerenciadorConexao();
+
+        //Declara as variáveis com nulas antes do try
+        //para poder usar no finally
+        PreparedStatement comando = null;
+
+        try {
+            //prepara o sql, analisandoi o formato e as váriaveis
+            comando = gerenciador.prepararComando(sql);
+
+            //define o valor de cada variável (?) pela posição em que aparecem
+            comando.setInt(1, c.getPkCliente());
+            comando.setInt(2, p.getPkPet());
+
+            //executa o comando e guarda o resultado da consulta
+            //o resultado é semelhante a uma grade
+            comando.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Feito!");
+            return true;
+
+        } catch (SQLException e) {
+
+            //caso ocorra um erro relacio0nado ao banco de dados
+            //exibe popup com o erro
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
+        } finally {
+            //depois de executar o try, dando erro ou não executa o finally
+            gerenciador.fecharConexao(comando);
+        }
+
+        return false;
 
     }
 }
