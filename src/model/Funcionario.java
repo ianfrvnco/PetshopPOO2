@@ -75,5 +75,7 @@ public class Funcionario {
     public Funcionario() {
     }
     
-    
+    public String toString(){
+        return nome;
+    }
 }

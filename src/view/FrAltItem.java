@@ -5,33 +5,35 @@
  */
 package view;
 
-import controller.PetController;
+import controller.ItemController;
 import java.util.List;
 import javax.swing.JOptionPane;
-import model.Pet;
+import model.Item;
 
 /**
  *
  * @author aluno.saolucas
  */
-public class FrAltPet extends javax.swing.JDialog {
+public class FrAltItem extends javax.swing.JDialog {
 
     /**
-     * Creates new form FrAltPet
+     * Creates new form FrAltItem
      */
-    private int pkPet;
-
-    public FrAltPet(java.awt.Frame parent, boolean modal) {
+    public FrAltItem(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
+    }
+    
+    private int pkItem;
+
+    public int getPkItem() {
+        return pkItem;
     }
 
-    public void setPkPet(int pkPet) {
-        this.pkPet = pkPet;
+    public void setPkItem(int pkItem) {
+        this.pkItem = pkItem;
     }
-
-    ;
+    
     
 
     /**
@@ -43,22 +45,20 @@ public class FrAltPet extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         imgLogo = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         edtCodigo = new javax.swing.JTextField();
         edtNome = new javax.swing.JTextField();
-        edtPelagem = new javax.swing.JTextField();
-        edtIdade = new javax.swing.JTextField();
+        edtQuantidade = new javax.swing.JTextField();
+        edtPreco = new javax.swing.JTextField();
         lblCodigo = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
-        lblEmail = new javax.swing.JLabel();
-        lblDataNasc = new javax.swing.JLabel();
+        lblQuantidade = new javax.swing.JLabel();
+        lblPreco = new javax.swing.JLabel();
         btnAlterar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-        rbtnGato = new javax.swing.JRadioButton();
-        rbtnCachorro = new javax.swing.JRadioButton();
+        chkboxDisponivel = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -73,7 +73,7 @@ public class FrAltPet extends javax.swing.JDialog {
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Alterar Pet");
+        lblTitulo.setText("Alterar Item");
 
         edtCodigo.setEditable(false);
 
@@ -85,13 +85,13 @@ public class FrAltPet extends javax.swing.JDialog {
         lblNome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNome.setText("Nome");
 
-        lblEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblEmail.setText("Cor do pelo");
+        lblQuantidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblQuantidade.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblQuantidade.setText("Quantidade");
 
-        lblDataNasc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblDataNasc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDataNasc.setText("Idade");
+        lblPreco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblPreco.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPreco.setText("Preço");
 
         btnAlterar.setText("Alterar");
         btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -102,13 +102,8 @@ public class FrAltPet extends javax.swing.JDialog {
 
         btnVoltar.setText("Voltar");
 
-        rbtnGato.setBackground(new java.awt.Color(204, 204, 255));
-        buttonGroup1.add(rbtnGato);
-        rbtnGato.setText("Gato");
-
-        rbtnCachorro.setBackground(new java.awt.Color(204, 204, 255));
-        buttonGroup1.add(rbtnCachorro);
-        rbtnCachorro.setText("Cachorro");
+        chkboxDisponivel.setBackground(new java.awt.Color(204, 204, 255));
+        chkboxDisponivel.setText("Disponível");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,34 +112,28 @@ public class FrAltPet extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(imgLogo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(btnVoltar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAlterar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                        .addComponent(btnAlterar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(imgLogo)))
                 .addGap(20, 20, 20))
+            .addComponent(lblCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(rbtnGato, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(rbtnCachorro)
-                        .addGap(20, 20, 20))
-                    .addComponent(edtNome)
-                    .addComponent(edtPelagem)
-                    .addComponent(edtIdade)
-                    .addComponent(edtCodigo)
-                    .addComponent(lblCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGap(82, 82, 82)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(chkboxDisponivel)
+                    .addComponent(edtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,33 +143,31 @@ public class FrAltPet extends javax.swing.JDialog {
                         .addGap(22, 22, 22)
                         .addComponent(imgLogo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(33, 33, 33)
                         .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(13, 13, 13)
+                .addGap(18, 18, 18)
                 .addComponent(lblCodigo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(edtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblNome)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbtnCachorro)
-                    .addComponent(rbtnGato))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblEmail)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(edtPelagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblDataNasc)
+                .addComponent(lblNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(edtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblQuantidade)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(edtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblPreco)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(edtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(chkboxDisponivel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAlterar)
                     .addComponent(btnVoltar))
-                .addGap(76, 76, 76))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,64 +179,74 @@ public class FrAltPet extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
+        alterar();
+    }//GEN-LAST:event_btnAlterarMouseClicked
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         //Carregar os dados do usuário
-        PetController controller = new PetController();
+        ItemController controller = new ItemController();
 
         //consultei os usuários com o código igual ao que recebi 
         // na tela de consulta
-        List<Pet> lista = controller.consultar(String.valueOf(pkPet));
+        List<Item> lista = controller.consultar(String.valueOf(pkItem));
 
-        Pet p = null;
-        p = lista.get(0);
+        Item i = null;
+        i = lista.get(0);
 
         //Preencher os campos como a variável usu
-        edtCodigo.setText(String.valueOf(p.getPkPet()));
-        edtNome.setText(p.getNome());
-        edtPelagem.setText(p.getPelagem());
-        if (p.getTipo().equals("Gato")) {
-            rbtnGato.setSelected(true);
-        } else {
-            rbtnCachorro.setSelected(true);
-        }
-        edtIdade.setText(String.valueOf(p.getIdade()));
+        edtCodigo.setText(String.valueOf(i.getPkItem()));
+        edtNome.setText(i.getNome());
+        edtQuantidade.setText(String.valueOf(i.getQuantidade()));
+        edtPreco.setText(String.valueOf(i.getPreco()));
+        chkboxDisponivel.setSelected(i.getDisponivel());
     }//GEN-LAST:event_formWindowOpened
 
-    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
-           gravar();
-    }//GEN-LAST:event_btnAlterarMouseClicked
-
-    private void gravar() {
-        //ler os campos
-        //guardar em um objeto
-
-        Pet f = new Pet();
-        f.setPkPet(Integer.parseInt(edtCodigo.getText()));
-        f.setNome(edtNome.getText());
-        f.setPelagem(edtPelagem.getText());
-        f.setIdade(Integer.parseInt(edtIdade.getText()));
-        if (rbtnGato.isSelected()) {
-            f.setTipo("Gato");
-        } else {
-            f.setTipo("Cachorro");
-        }
-
-        // enviar para o banco de dados
-        PetController controller = new PetController();
-        if (controller.alterar(f)) {
-            JOptionPane.showMessageDialog(null, "Pet atualizado.");
-            this.dispose();
-        }
-
+    private void alterar() {
+    //validar o preenchimento dos campos
+    if (!verificarCampos()) {
+      return;
     }
 
+    //ler os campos e guardar num objeto
+    Item i = new Item();
+    i.setPkItem(Integer.parseInt(edtCodigo.getText()));
+    i.setNome(edtNome.getText());
+    i.setQuantidade(Integer.parseInt(edtQuantidade.getText()));
+    i.setPreco(Double.parseDouble(edtPreco.getText()));
+    i.setDisponivel(chkboxDisponivel.isSelected());
+
+    //enviar para o banco de dados
+    ItemController controller = new ItemController();
+    if (controller.alterar(i)) {
+      JOptionPane.showMessageDialog(null, "Item alterado");
+      this.dispose();
+    }
+  }
+    
+    private boolean verificarCampos() {
+    if (edtNome.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Campo 'Nome' em branco");
+      return false;
+    }
+    if (edtQuantidade.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Campo 'E-mail' em branco");
+      return false;
+    }
+    if (edtPreco.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Campo 'Data de Nascimento' em branco");
+      return false;
+    }
+    return true;
+  }
+    
     /**
      * @param args the command line arguments
      */
@@ -267,20 +264,20 @@ public class FrAltPet extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrAltPet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrAltItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrAltPet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrAltItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrAltPet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrAltItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrAltPet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrAltItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrAltPet dialog = new FrAltPet(new javax.swing.JFrame(), true);
+                FrAltItem dialog = new FrAltItem(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -295,19 +292,17 @@ public class FrAltPet extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnVoltar;
-    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox chkboxDisponivel;
     private javax.swing.JTextField edtCodigo;
-    private javax.swing.JTextField edtIdade;
     private javax.swing.JTextField edtNome;
-    private javax.swing.JTextField edtPelagem;
+    private javax.swing.JTextField edtPreco;
+    private javax.swing.JTextField edtQuantidade;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCodigo;
-    private javax.swing.JLabel lblDataNasc;
-    private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblPreco;
+    private javax.swing.JLabel lblQuantidade;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JRadioButton rbtnCachorro;
-    private javax.swing.JRadioButton rbtnGato;
     // End of variables declaration//GEN-END:variables
 }

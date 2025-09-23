@@ -19,9 +19,10 @@ public class ItemController {
     
     public boolean inserir(Item i) {
 
+        
          //Montar o comando a ser executado
         //os ? são variáveis que são preenchidas mais adiante
-        String sql = "INSERT INTO INVENTARIO(nome, quantidade, preco, disponivel) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO INVENTARIO(nome, quantidade, preco, disponivel) VALUES (?,?,?,1)";
 
         //Cria uma instância do gerenciador de conexão
         //Conexão com o banco de dados
@@ -39,7 +40,6 @@ public class ItemController {
             comando.setString(1, i.getNome());
             comando.setInt(2, i.getQuantidade());
             comando.setDouble(3, i.getPreco());
-            comando.setInt(4, i.getDisponivel());
  
             //executa o comando e guarda o resultado da consulta
             //o resultado é semelhante a uma grade
@@ -61,11 +61,17 @@ public class ItemController {
 
     }
     
-    public List<Item> consultar() {
+    public List<Item> consultar(String filtro) {
 
         //Montar o comando a ser executado
         //os ? são variáveis que são preenchidas mais adiante
-        String sql = "SELECT * FROM INVENTARIO;";
+        String sql = "";
+        
+        if (filtro.equals("")) {
+            sql = "SELECT * FROM INVENTARIO;";
+        } else {
+            sql = "SELECT * FROM INVENTARIO WHERE pkItem= " + filtro;
+        }
 
         //Cria uma instância do gerenciador de conexão
         //Conexão com o banco de dados
@@ -92,10 +98,11 @@ public class ItemController {
             while (resultado.next()) {
                 Item it = new Item();
 
+                it.setPkItem(resultado.getInt("pkItem"));
                 it.setNome(resultado.getString("nome"));
                 it.setQuantidade(resultado.getInt("quantidade"));
                 it.setPreco(resultado.getDouble("preco"));
-                it.setDisponivel(resultado.getInt("disponivel"));
+                it.setDisponivel(resultado.getBoolean("disponivel"));
 
                 lista.add(it);
             }
@@ -112,6 +119,52 @@ public class ItemController {
 
         return lista;
 
+    }
+    
+    public boolean alterar(Item i) {
+        //Montar o comando a ser executado
+        //os ? são variáveis que são preenchidas mais adiante
+        String sql = "UPDATE INVENTARIO SET "
+                + " nome = ?, " 
+                + " quantidade = ?, " 
+                + " preco = ?, "
+                + " disponivel = ?"
+                + " WHERE pkItem = ? ";
+
+
+        //Cria uma instância do gerenciador de conexão
+        //(conexão com o banco de dados),
+        GerenciadorConexao gerenciador = new GerenciadorConexao();
+
+        //Declara as variáveis como nulas antes do try 
+        //para poder usar no finally
+        PreparedStatement comando = null;
+
+        try {
+            //prepara o sql, analisando o formato e as váriaveis
+            comando = gerenciador.prepararComando(sql);
+
+            //define o valor de cada variável(?) pela posição em que aparece no sql
+            //comando.setInt(1, c.getPkCliente());
+            comando.setString(1, i.getNome());
+            comando.setInt(2, i.getQuantidade());
+            comando.setDouble(3, i.getPreco());
+            comando.setBoolean(4, i.getDisponivel());
+            comando.setInt(5, i.getPkItem());
+
+            //executa o comando 
+            comando.executeUpdate();
+            
+            return true;
+        } catch (SQLException e) {
+            //caso ocorra um erro relacionado ao banco de dados
+            //exibe popup com o erro
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            //depois de executar o try, dando erro ou não executa o finally
+            gerenciador.fecharConexao(comando);
+        }
+        return false;
     }
 
 }

@@ -37,9 +37,12 @@ public class FrMenu extends javax.swing.JFrame {
         mnCadCliente = new javax.swing.JMenuItem();
         mnCadPet = new javax.swing.JMenuItem();
         mnCadFuncionario = new javax.swing.JMenuItem();
+        mnCadVenda = new javax.swing.JMenuItem();
+        mnCadConsulta = new javax.swing.JMenuItem();
         mnConsulta = new javax.swing.JMenu();
         mnConCliente = new javax.swing.JMenuItem();
         mnConPet = new javax.swing.JMenuItem();
+        mnConFuncionario = new javax.swing.JMenuItem();
         mnConVendas = new javax.swing.JMenuItem();
         mnItens = new javax.swing.JMenu();
         mnInventario = new javax.swing.JMenuItem();
@@ -123,17 +126,56 @@ public class FrMenu extends javax.swing.JFrame {
         });
         mnCadastro.add(mnCadFuncionario);
 
+        mnCadVenda.setText("Venda");
+        mnCadVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCadVendaActionPerformed(evt);
+            }
+        });
+        mnCadastro.add(mnCadVenda);
+
+        mnCadConsulta.setText("Consulta");
+        mnCadConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCadConsultaActionPerformed(evt);
+            }
+        });
+        mnCadastro.add(mnCadConsulta);
+
         jMenuBar1.add(mnCadastro);
 
         mnConsulta.setText("Consulta");
 
         mnConCliente.setText("Cliente");
+        mnConCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConClienteActionPerformed(evt);
+            }
+        });
         mnConsulta.add(mnConCliente);
 
         mnConPet.setText("Pet");
+        mnConPet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConPetActionPerformed(evt);
+            }
+        });
         mnConsulta.add(mnConPet);
 
+        mnConFuncionario.setText("Funcionario");
+        mnConFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConFuncionarioActionPerformed(evt);
+            }
+        });
+        mnConsulta.add(mnConFuncionario);
+
         mnConVendas.setText("Vendas");
+        mnConVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConVendasActionPerformed(evt);
+            }
+        });
         mnConsulta.add(mnConVendas);
 
         jMenuBar1.add(mnConsulta);
@@ -208,6 +250,42 @@ public class FrMenu extends javax.swing.JFrame {
         telaConInventario.setVisible(true);
     }//GEN-LAST:event_mnInventarioActionPerformed
 
+    private void mnConFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConFuncionarioActionPerformed
+        FrConFuncionario telaConFuncionario = new FrConFuncionario(this, rootPaneCheckingEnabled);
+        
+        telaConFuncionario.setVisible(true);
+    }//GEN-LAST:event_mnConFuncionarioActionPerformed
+
+    private void mnConClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConClienteActionPerformed
+        FrConCliente telaConCliente = new FrConCliente(this, rootPaneCheckingEnabled);
+        
+        telaConCliente.setVisible(true);
+    }//GEN-LAST:event_mnConClienteActionPerformed
+
+    private void mnConPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConPetActionPerformed
+       FrConPet telaConPet = new FrConPet(this, rootPaneCheckingEnabled);
+        
+        telaConPet.setVisible(true);
+    }//GEN-LAST:event_mnConPetActionPerformed
+
+    private void mnConVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConVendasActionPerformed
+        FrConVendas telaConVendas = new FrConVendas(this, rootPaneCheckingEnabled);
+        
+        telaConVendas.setVisible(true);
+    }//GEN-LAST:event_mnConVendasActionPerformed
+
+    private void mnCadConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadConsultaActionPerformed
+        FrCadConsulta telaCadConsulta = new FrCadConsulta(this, rootPaneCheckingEnabled);
+        
+        telaCadConsulta.setVisible(true);
+    }//GEN-LAST:event_mnCadConsultaActionPerformed
+
+    private void mnCadVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadVendaActionPerformed
+        FrCadVenda telaCadVenda = new FrCadVenda(this, rootPaneCheckingEnabled);
+        
+        telaCadVenda.setVisible(true);
+    }//GEN-LAST:event_mnCadVendaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -250,10 +328,13 @@ public class FrMenu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem mnCadCliente;
+    private javax.swing.JMenuItem mnCadConsulta;
     private javax.swing.JMenuItem mnCadFuncionario;
     private javax.swing.JMenuItem mnCadPet;
+    private javax.swing.JMenuItem mnCadVenda;
     private javax.swing.JMenu mnCadastro;
     private javax.swing.JMenuItem mnConCliente;
+    private javax.swing.JMenuItem mnConFuncionario;
     private javax.swing.JMenuItem mnConPet;
     private javax.swing.JMenuItem mnConVendas;
     private javax.swing.JMenu mnConsulta;

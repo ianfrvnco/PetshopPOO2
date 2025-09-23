@@ -6,27 +6,32 @@
 package view;
 
 import controller.ItemController;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Item;
-import utils.Util;
 
 /**
  *
  * @author aluno.saolucas
  */
-public class FrConInventario extends javax.swing.JDialog {
+public class FrSelecionaItens extends javax.swing.JDialog {
 
-    /**
-     * Creates new form NewJDialog
-     */
-    public FrConInventario(java.awt.Frame parent, boolean modal) {
+    private List<Item> listaItens;
+
+    public List<Item> getListaItens() {
+        return listaItens;
+    }
+
+    public void setListaItens(List<Item> listaItens) {
+        this.listaItens = listaItens;
+    }
+    
+    public FrSelecionaItens(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,7 +49,6 @@ public class FrConInventario extends javax.swing.JDialog {
         btnAdicionarItem = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        btnAlterarItem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -63,14 +67,14 @@ public class FrConInventario extends javax.swing.JDialog {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Item", "Quantidade", "Preço", "Disponível"
+                "ID", "Item", "Quantidade", "Preço", "Selecionar"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -85,7 +89,7 @@ public class FrConInventario extends javax.swing.JDialog {
 
         imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
 
-        btnAdicionarItem.setText("Adicionar item");
+        btnAdicionarItem.setText("Selecionar itens");
         btnAdicionarItem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAdicionarItemMouseClicked(evt);
@@ -98,29 +102,20 @@ public class FrConInventario extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Inventário");
 
-        btnAlterarItem.setText("Alterar item");
-        btnAlterarItem.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAlterarItemMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnVoltar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAdicionarItem)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAlterarItem)))
+                                .addComponent(btnAdicionarItem))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,7 +130,7 @@ public class FrConInventario extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(imgLogo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
@@ -144,8 +139,7 @@ public class FrConInventario extends javax.swing.JDialog {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionarItem)
-                    .addComponent(btnVoltar)
-                    .addComponent(btnAlterarItem))
+                    .addComponent(btnVoltar))
                 .addContainerGap())
         );
 
@@ -163,72 +157,57 @@ public class FrConInventario extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAdicionarItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarItemMouseClicked
+        
+        selecionar();
+        
+        this.dispose();
+    }//GEN-LAST:event_btnAdicionarItemMouseClicked
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         pesquisar();
     }//GEN-LAST:event_formWindowOpened
 
-    private void btnAdicionarItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarItemMouseClicked
-        FrAddItem telaAddItem = new FrAddItem(null, rootPaneCheckingEnabled);
-
-        telaAddItem.setVisible(true);
-        pesquisar();
-    }//GEN-LAST:event_btnAdicionarItemMouseClicked
-
-    private void btnAlterarItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarItemMouseClicked
-        //Valido se tem alguma linha selecionada na grade = -1
-        if (tblItens.getSelectedRow() == -1) {
-            return; //encerro a função
+   private void selecionar(){
+        
+        listaItens = new ArrayList<>();
+        for (int i = 0; i < tblItens.getRowCount(); i++) {
+            String celula =  tblItens.getValueAt(i, 4).toString();
+            
+            boolean selecionado = Boolean.parseBoolean(celula);
+            if(selecionado){
+                
+                Item it = (Item) tblItens.getValueAt(i, 1);
+            
+                listaItens.add(it);
+            }
         }
-
-        //pego o número da linha selecionada
-        int posicaoLinha = tblItens.getSelectedRow();
-
-        //pegar o valor da célula na grade, na coluna 0 (Código)
-        String celula = tblItens.getValueAt(posicaoLinha, 0).toString();
-
-        int pkItem = Integer.parseInt(celula);
-        FrAltItem telaAlterar = new FrAltItem(null, rootPaneCheckingEnabled);
-        //passo pra tela e alteração o código do usuário selecionado
-        telaAlterar.setPkItem(pkItem);
-        telaAlterar.setVisible(true);
-
-        //Quando fechar a janela de alterar vai continuar aqui
-        //refazendo a pesquisa da grade para atualizar
-        pesquisar();
-    }//GEN-LAST:event_btnAlterarItemMouseClicked
-
+        
+    }
+    
     private void pesquisar() {
-        //Pega o modelo da grade com suas colunas
+
         DefaultTableModel modeloTabela = (DefaultTableModel) tblItens.getModel();
 
-        //Limpa a grade setando o número de linhas para zero
         modeloTabela.setNumRows(0);
 
-        //consultar o banco de dados
         ItemController controller = new ItemController();
+        List<Item> listaPets = controller.consultar("");
 
-        //passa os filtros pro método consultar
-        List<Item> listaItens = controller.consultar("");
-
-        //Preenche a grade
-        for (Item i : listaItens) {
+        for (Item i : listaPets) {
             Object[] linha = {
                 i.getPkItem(),
-                i.getNome(),
-                i.getQuantidade(), 
-                i.getPreco(), 
-                i.getDisponivel()
+                i,
+                i.getQuantidade(),
+                i.getPreco(),
+                false
             };
 
             modeloTabela.addRow(linha);
 
         }
-
     }
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -243,27 +222,20 @@ public class FrConInventario extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrConInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrSelecionaItens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrConInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrSelecionaItens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrConInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrSelecionaItens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrConInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrSelecionaItens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrConInventario dialog = new FrConInventario(new javax.swing.JFrame(), true);
+                FrSelecionaItens dialog = new FrSelecionaItens(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -277,7 +249,6 @@ public class FrConInventario extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionarItem;
-    private javax.swing.JButton btnAlterarItem;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JLabel jLabel1;

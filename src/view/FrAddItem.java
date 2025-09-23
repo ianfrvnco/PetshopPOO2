@@ -5,6 +5,7 @@
  */
 package view;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import controller.ItemController;
 import javax.swing.JOptionPane;
 import model.Item;
@@ -157,11 +158,11 @@ public class FrAddItem extends javax.swing.JDialog {
         
         i.setNome(edtItem.getText());
         i.setQuantidade(Integer.parseInt(edtQuantidade.getText()));
-        i.setPreco(Double.parseDouble(edtPreco.getText()));
+        i.setPreco(Double.parseDouble(edtPreco.getText().replace(",", ".")));
 
         
         if(controller.inserir(i)){
-            JOptionPane.showMessageDialog(null, "Cliente adicionado!");
+            JOptionPane.showMessageDialog(null, "Item adicionado!");
             edtItem.setText("");
             edtQuantidade.setText("");
             edtPreco.setText("");

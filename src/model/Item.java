@@ -10,9 +10,10 @@ package model;
  * @author aluno.saolucas
  */
 public class Item {
-    private int pkItem, quantidade, disponivel;
+    private int pkItem, quantidade;
     private String nome;
     private double preco;
+    private boolean disponivel;
 
     public int getPkItem() {
         return pkItem;
@@ -30,11 +31,11 @@ public class Item {
         this.quantidade = quantidade;
     }
 
-    public int getDisponivel() {
+    public boolean getDisponivel() {
         return disponivel;
     }
 
-    public void setDisponivel(int disponivel) {
+    public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
     }
 
@@ -57,12 +58,16 @@ public class Item {
     public Item() {
     }
 
-    public Item(int pkItem, int quantidade, int disponivel, String nome, double preco) {
+    public Item(int pkItem, int quantidade, boolean disponivel, String nome, double preco) {
         this.pkItem = pkItem;
         this.quantidade = quantidade;
         this.disponivel = disponivel;
         this.nome = nome;
         this.preco = preco;
+    }
+    
+    public String toString(){
+        return nome;
     }
     
     
