@@ -8,6 +8,7 @@ package view;
 import controller.PetController;
 import javax.swing.JOptionPane;
 import model.Pet;
+import utils.Util;
 
 /**
  *
@@ -49,6 +50,12 @@ public class FrCadPet extends javax.swing.JDialog {
         rbtnCachorro = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastrar pet");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -78,6 +85,11 @@ public class FrCadPet extends javax.swing.JDialog {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
+            }
+        });
 
         rbtnGato.setBackground(new java.awt.Color(204, 204, 255));
         buttonGroup1.add(rbtnGato);
@@ -191,6 +203,14 @@ public class FrCadPet extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Erro.");
         };
     }//GEN-LAST:event_btnCadastrarMouseClicked
+
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    this.setIconImage(Util.getIcone());    // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

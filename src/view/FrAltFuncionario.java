@@ -61,6 +61,7 @@ public class FrAltFuncionario extends javax.swing.JDialog {
         edtSenhaConfirma = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alterar funcionario");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -97,6 +98,11 @@ public class FrAltFuncionario extends javax.swing.JDialog {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
+            }
+        });
 
         rbtnAtivo.setBackground(new java.awt.Color(204, 204, 255));
         rbtnAtivo.setText("Ativo");
@@ -223,6 +229,8 @@ public class FrAltFuncionario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setIconImage(Util.getIcone());
+
         //Carregar os dados do usuário
         FuncionarioController controller = new FuncionarioController();
 
@@ -241,7 +249,7 @@ public class FrAltFuncionario extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnAlterarSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarSenhaMouseClicked
-         
+
         if (edtSenha.isEditable()) {
             edtSenha.setEditable(false);
             edtSenhaConfirma.setEditable(false);
@@ -266,6 +274,10 @@ public class FrAltFuncionario extends javax.swing.JDialog {
         gravar();
     }//GEN-LAST:event_btnAlterarMouseClicked
 
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMouseClicked
+
     private void gravar() {
         //validar os campos
 
@@ -280,7 +292,6 @@ public class FrAltFuncionario extends javax.swing.JDialog {
         f.setNome(edtNome.getText());
         f.setEmail(edtEmail.getText());
         f.setAtivo(rbtnAtivo.isSelected());
-        
 
         // enviar para o banco de dados
         FuncionarioController controller = new FuncionarioController();
@@ -344,7 +355,7 @@ public class FrAltFuncionario extends javax.swing.JDialog {
 
         return true;
     }
-    
+
     /**
      * @param args the command line arguments
      */

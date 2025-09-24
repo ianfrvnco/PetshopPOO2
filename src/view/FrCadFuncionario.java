@@ -7,6 +7,7 @@ package view;
 
 import controller.FuncionarioController;
 import javax.swing.JOptionPane;
+import utils.Util;
 
 /**
  *
@@ -45,6 +46,12 @@ public class FrCadFuncionario extends javax.swing.JDialog {
         edtSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastrar funcionario");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -176,6 +183,10 @@ public class FrCadFuncionario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Erro.");
         };
     }//GEN-LAST:event_btnCadastrarMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setIconImage(Util.getIcone());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

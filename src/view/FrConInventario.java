@@ -47,6 +47,7 @@ public class FrConInventario extends javax.swing.JDialog {
         btnAlterarItem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Inventario");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -93,6 +94,11 @@ public class FrConInventario extends javax.swing.JDialog {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -164,6 +170,7 @@ public class FrConInventario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setIconImage(Util.getIcone());
         pesquisar();
     }//GEN-LAST:event_formWindowOpened
 
@@ -196,6 +203,10 @@ public class FrConInventario extends javax.swing.JDialog {
         //refazendo a pesquisa da grade para atualizar
         pesquisar();
     }//GEN-LAST:event_btnAlterarItemMouseClicked
+
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+       this.dispose();
+    }//GEN-LAST:event_btnVoltarMouseClicked
 
     private void pesquisar() {
         //Pega o modelo da grade com suas colunas

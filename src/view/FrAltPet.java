@@ -9,6 +9,7 @@ import controller.PetController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Pet;
+import utils.Util;
 
 /**
  *
@@ -61,6 +62,7 @@ public class FrAltPet extends javax.swing.JDialog {
         rbtnCachorro = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alterar pet");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -101,6 +103,11 @@ public class FrAltPet extends javax.swing.JDialog {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
+            }
+        });
 
         rbtnGato.setBackground(new java.awt.Color(204, 204, 255));
         buttonGroup1.add(rbtnGato);
@@ -200,7 +207,9 @@ public class FrAltPet extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        //Carregar os dados do usuário
+        this.setIconImage(Util.getIcone());
+        
+//Carregar os dados do usuário
         PetController controller = new PetController();
 
         //consultei os usuários com o código igual ao que recebi 
@@ -225,6 +234,10 @@ public class FrAltPet extends javax.swing.JDialog {
     private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
            gravar();
     }//GEN-LAST:event_btnAlterarMouseClicked
+
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMouseClicked
 
     private void gravar() {
         //ler os campos

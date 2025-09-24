@@ -56,6 +56,7 @@ public class FrAltCliente extends javax.swing.JDialog {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alterar cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -96,6 +97,11 @@ public class FrAltCliente extends javax.swing.JDialog {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,6 +181,7 @@ public class FrAltCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+     this.setIconImage(Util.getIcone());
      
     //Carregar os dados do usuário
     ClienteController controller = new ClienteController();
@@ -193,6 +200,10 @@ public class FrAltCliente extends javax.swing.JDialog {
     edtDataNasc.setText(
     Util.converterDateToString(c.getDataNasc()));
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMouseClicked
 
     private void alterar() {
     //validar o preenchimento dos campos

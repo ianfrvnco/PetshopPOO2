@@ -6,10 +6,17 @@
 package view;
 
 import controller.ClienteController;
+import controller.ItemController;
+import controller.VendaController;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Cliente;
 import model.Item;
+import model.Venda;
+import utils.Util;
 
 /**
  *
@@ -23,6 +30,7 @@ public class FrCadVenda extends javax.swing.JDialog {
     public FrCadVenda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -43,8 +51,10 @@ public class FrCadVenda extends javax.swing.JDialog {
         tblItens = new javax.swing.JTable();
         btnCadastrar = new javax.swing.JButton();
         btnSelecionarItens = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastrar venda");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -92,11 +102,23 @@ public class FrCadVenda extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblItens);
 
         btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCadastrarMouseClicked(evt);
+            }
+        });
 
         btnSelecionarItens.setText("Selecionar itens");
         btnSelecionarItens.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSelecionarItensMouseClicked(evt);
+            }
+        });
+
+        btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
             }
         });
 
@@ -118,8 +140,10 @@ public class FrCadVenda extends javax.swing.JDialog {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCadastrar)
-                            .addComponent(btnSelecionarItens)))
+                            .addComponent(btnSelecionarItens)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnVoltar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCadastrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -135,13 +159,17 @@ public class FrCadVenda extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnSelecionarItens)
-                        .addGap(139, 139, 139)
-                        .addComponent(btnCadastrar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCadastrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVoltar)
+                        .addGap(15, 15, 15))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,6 +187,8 @@ public class FrCadVenda extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setIconImage(Util.getIcone());
+        
         ClienteController controller = new ClienteController();
         //Consulto todos os usuários
         List<Cliente> lista = controller.consultar("");
@@ -182,7 +212,7 @@ public class FrCadVenda extends javax.swing.JDialog {
 
         if (listaItem != null) {
             DefaultTableModel modeloTabela = (DefaultTableModel) tblItens.getModel();
-            
+
             for (Item i : listaItem) {
                 Object[] linha = {
                     i.getPkItem(),
@@ -194,9 +224,43 @@ public class FrCadVenda extends javax.swing.JDialog {
                 modeloTabela.addRow(linha);
 
             }
-        
+
         }
     }//GEN-LAST:event_btnSelecionarItensMouseClicked
+
+    private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
+        cadastrar();
+    }//GEN-LAST:event_btnCadastrarMouseClicked
+
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+       this.dispose();
+    }//GEN-LAST:event_btnVoltarMouseClicked
+
+    public void cadastrar() {
+        VendaController vController = new VendaController();
+        ItemController iController = new ItemController();
+        Venda v = new Venda();
+
+        Cliente cliente = cbxCliente.getItemAt(cbxCliente.getSelectedIndex());
+        v.setFk_pkCliente(cliente.getPkCliente());
+        v.setEmailCliente(cliente.getEmail());
+        List<Item> itensSelecionados = iController.consultar("");
+
+        double valorTotal = 0.0;
+        for (Item it : itensSelecionados) {
+            double subtotal = it.getQuantidade()* it.getPreco();
+            valorTotal += subtotal;
+        }
+        v.setValorTotal(valorTotal);
+        v.setDataVenda(new Date());
+        
+        if (vController.inserir(v)) {
+            JOptionPane.showMessageDialog(null, "Venda cadastrada!");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro.");
+        };
+    }
 
     /**
      * @param args the command line arguments
@@ -243,6 +307,7 @@ public class FrCadVenda extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnSelecionarItens;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<Cliente> cbxCliente;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JLabel jLabel1;

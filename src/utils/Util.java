@@ -1,9 +1,12 @@
 
 package utils;
 
+import java.awt.Image;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Util {
@@ -36,5 +39,13 @@ public class Util {
     }
 
     return texto;
+  }
+    
+    public static Image getIcone(){
+    URL caminhoImagem = Util.class.getResource("/images/imgPetMenu24px.png");
+
+    ImageIcon icon = new ImageIcon(caminhoImagem);
+    
+    return icon.getImage();
   }
 }

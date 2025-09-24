@@ -5,30 +5,22 @@
  */
 package view;
 
-import controller.ItemController;
-import java.util.ArrayList;
+import controller.ConsultaController;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import model.Item;
+import model.Consulta;
 import utils.Util;
 
 /**
  *
  * @author aluno.saolucas
  */
-public class FrSelecionaItens extends javax.swing.JDialog {
+public class FrConConsultas extends javax.swing.JDialog {
 
-    private List<Item> listaItens;
-
-    public List<Item> getListaItens() {
-        return listaItens;
-    }
-
-    public void setListaItens(List<Item> listaItens) {
-        this.listaItens = listaItens;
-    }
-    
-    public FrSelecionaItens(java.awt.Frame parent, boolean modal) {
+    /**
+     * Creates new form FrConConsultas
+     */
+    public FrConConsultas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -45,14 +37,13 @@ public class FrSelecionaItens extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblItens = new javax.swing.JTable();
+        tblConsultas = new javax.swing.JTable();
         imgLogo = new javax.swing.JLabel();
-        btnAdicionarItem = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Selecionar itens");
+        setTitle("Consultar consultas");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -61,22 +52,22 @@ public class FrSelecionaItens extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        tblItens.setModel(new javax.swing.table.DefaultTableModel(
+        tblConsultas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Item", "Quantidade", "Preço", "Selecionar"
+                "ID", "Nome Pet", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -87,16 +78,9 @@ public class FrSelecionaItens extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblItens);
+        jScrollPane1.setViewportView(tblConsultas);
 
         imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/imgPetMenu64px.png"))); // NOI18N
-
-        btnAdicionarItem.setText("Selecionar itens");
-        btnAdicionarItem.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAdicionarItemMouseClicked(evt);
-            }
-        });
 
         btnVoltar.setText("Voltar");
         btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -107,46 +91,36 @@ public class FrSelecionaItens extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Inventário");
+        jLabel1.setText("Consulta de Consultas");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnVoltar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAdicionarItem))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(imgLogo)
-                        .addGap(26, 26, 26))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVoltar))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(imgLogo)
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(imgLogo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(47, 47, 47)))
+                    .addComponent(imgLogo)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdicionarItem)
-                    .addComponent(btnVoltar))
+                .addComponent(btnVoltar)
                 .addContainerGap())
         );
 
@@ -164,62 +138,47 @@ public class FrSelecionaItens extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAdicionarItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarItemMouseClicked
-        
-        selecionar();
-        
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
         this.dispose();
-    }//GEN-LAST:event_btnAdicionarItemMouseClicked
+    }//GEN-LAST:event_btnVoltarMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.setIconImage(Util.getIcone());
         pesquisar();
     }//GEN-LAST:event_formWindowOpened
 
-    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
-        this.dispose();
-    }//GEN-LAST:event_btnVoltarMouseClicked
-
-   private void selecionar(){
-        
-        listaItens = new ArrayList<>();
-        for (int i = 0; i < tblItens.getRowCount(); i++) {
-            String celula =  tblItens.getValueAt(i, 4).toString();
-            
-            boolean selecionado = Boolean.parseBoolean(celula);
-            if(selecionado){
-                
-                Item it = (Item) tblItens.getValueAt(i, 1);
-            
-                listaItens.add(it);
-            }
-        }
-        
-    }
     
     private void pesquisar() {
+        //Pega o modelo da grade com suas colunas
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblConsultas.getModel();
 
-        DefaultTableModel modeloTabela = (DefaultTableModel) tblItens.getModel();
-
+        //Limpa a grade setando o número de linhas para zero
         modeloTabela.setNumRows(0);
 
-        ItemController controller = new ItemController();
-        List<Item> listaItens = controller.consultar("");
+        //consultar o banco de dados
+        ConsultaController controller = new ConsultaController();
 
-        for (Item i : listaItens) {
+        //passa os filtros pro método consultar
+        List<Consulta> listaConsultas = controller.consultar();
+
+        //Preenche a grade
+        for (Consulta c : listaConsultas) {
             Object[] linha = {
-                i.getPkItem(),
-                i,
-                i.getQuantidade(),
-                i.getPreco(),
-                false
+                c.getPkConsulta(),
+                c.getNomePet(),
+                c.getEmailFuncionario()
+                
             };
 
             modeloTabela.addRow(linha);
 
         }
+
     }
     
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -234,20 +193,20 @@ public class FrSelecionaItens extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrSelecionaItens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrConConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrSelecionaItens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrConConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrSelecionaItens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrConConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrSelecionaItens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrConConsultas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrSelecionaItens dialog = new FrSelecionaItens(new javax.swing.JFrame(), true);
+                FrConConsultas dialog = new FrConConsultas(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -260,12 +219,11 @@ public class FrSelecionaItens extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdicionarItem;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblItens;
+    private javax.swing.JTable tblConsultas;
     // End of variables declaration//GEN-END:variables
 }

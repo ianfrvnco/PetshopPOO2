@@ -9,6 +9,7 @@ import controller.ItemController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Item;
+import utils.Util;
 
 /**
  *
@@ -23,7 +24,7 @@ public class FrAltItem extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-    
+
     private int pkItem;
 
     public int getPkItem() {
@@ -33,8 +34,6 @@ public class FrAltItem extends javax.swing.JDialog {
     public void setPkItem(int pkItem) {
         this.pkItem = pkItem;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,6 +60,7 @@ public class FrAltItem extends javax.swing.JDialog {
         chkboxDisponivel = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alterar item");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -101,6 +101,11 @@ public class FrAltItem extends javax.swing.JDialog {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
+            }
+        });
 
         chkboxDisponivel.setBackground(new java.awt.Color(204, 204, 255));
         chkboxDisponivel.setText("Disponível");
@@ -191,7 +196,9 @@ public class FrAltItem extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        //Carregar os dados do usuário
+        this.setIconImage(Util.getIcone());
+
+//Carregar os dados do usuário
         ItemController controller = new ItemController();
 
         //consultei os usuários com o código igual ao que recebi 
@@ -209,44 +216,48 @@ public class FrAltItem extends javax.swing.JDialog {
         chkboxDisponivel.setSelected(i.getDisponivel());
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMouseClicked
+
     private void alterar() {
-    //validar o preenchimento dos campos
-    if (!verificarCampos()) {
-      return;
+        //validar o preenchimento dos campos
+        if (!verificarCampos()) {
+            return;
+        }
+
+        //ler os campos e guardar num objeto
+        Item i = new Item();
+        i.setPkItem(Integer.parseInt(edtCodigo.getText()));
+        i.setNome(edtNome.getText());
+        i.setQuantidade(Integer.parseInt(edtQuantidade.getText()));
+        i.setPreco(Double.parseDouble(edtPreco.getText()));
+        i.setDisponivel(chkboxDisponivel.isSelected());
+
+        //enviar para o banco de dados
+        ItemController controller = new ItemController();
+        if (controller.alterar(i)) {
+            JOptionPane.showMessageDialog(null, "Item alterado");
+            this.dispose();
+        }
     }
 
-    //ler os campos e guardar num objeto
-    Item i = new Item();
-    i.setPkItem(Integer.parseInt(edtCodigo.getText()));
-    i.setNome(edtNome.getText());
-    i.setQuantidade(Integer.parseInt(edtQuantidade.getText()));
-    i.setPreco(Double.parseDouble(edtPreco.getText()));
-    i.setDisponivel(chkboxDisponivel.isSelected());
-
-    //enviar para o banco de dados
-    ItemController controller = new ItemController();
-    if (controller.alterar(i)) {
-      JOptionPane.showMessageDialog(null, "Item alterado");
-      this.dispose();
-    }
-  }
-    
     private boolean verificarCampos() {
-    if (edtNome.getText().isEmpty()) {
-      JOptionPane.showMessageDialog(null, "Campo 'Nome' em branco");
-      return false;
+        if (edtNome.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo 'Nome' em branco");
+            return false;
+        }
+        if (edtQuantidade.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo 'E-mail' em branco");
+            return false;
+        }
+        if (edtPreco.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo 'Data de Nascimento' em branco");
+            return false;
+        }
+        return true;
     }
-    if (edtQuantidade.getText().isEmpty()) {
-      JOptionPane.showMessageDialog(null, "Campo 'E-mail' em branco");
-      return false;
-    }
-    if (edtPreco.getText().isEmpty()) {
-      JOptionPane.showMessageDialog(null, "Campo 'Data de Nascimento' em branco");
-      return false;
-    }
-    return true;
-  }
-    
+
     /**
      * @param args the command line arguments
      */

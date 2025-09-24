@@ -8,6 +8,7 @@ package view;
 import controller.ClienteController;
 import javax.swing.JOptionPane;
 import model.Cliente;
+import utils.Util;
 
 /**
  *
@@ -46,6 +47,12 @@ public class FrCadCliente extends javax.swing.JDialog {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastrar cliente");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -177,6 +184,10 @@ public class FrCadCliente extends javax.swing.JDialog {
     private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
         this.dispose();
     }//GEN-LAST:event_btnVoltarMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+       this.setIconImage(Util.getIcone());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

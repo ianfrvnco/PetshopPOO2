@@ -58,6 +58,7 @@ public class FrRelacionando extends javax.swing.JDialog {
         edtCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Relacionar pets");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -177,6 +178,7 @@ public class FrRelacionando extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVoltarMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setIconImage(Util.getIcone());
 
         DefaultTableModel modeloTabela = (DefaultTableModel) tblPets.getModel();
         modeloTabela.setNumRows(0);
@@ -218,7 +220,7 @@ public class FrRelacionando extends javax.swing.JDialog {
 
         if (listaPets != null) {
             DefaultTableModel modeloTabela = (DefaultTableModel) tblPets.getModel();
-            
+
             for (Pet p : listaPets) {
                 Object[] linha = {
                     p.getPkPet(),
@@ -229,7 +231,7 @@ public class FrRelacionando extends javax.swing.JDialog {
                 modeloTabela.addRow(linha);
 
             }
-        
+
         }
     }//GEN-LAST:event_btnRelacionarPetMouseClicked
 

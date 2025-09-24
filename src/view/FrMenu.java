@@ -5,6 +5,8 @@
  */
 package view;
 
+import utils.Util;
+
 /**
  *
  * @author aluno.saolucas
@@ -44,12 +46,19 @@ public class FrMenu extends javax.swing.JFrame {
         mnConPet = new javax.swing.JMenuItem();
         mnConFuncionario = new javax.swing.JMenuItem();
         mnConVendas = new javax.swing.JMenuItem();
+        mnConConsultas = new javax.swing.JMenuItem();
         mnItens = new javax.swing.JMenu();
         mnInventario = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -178,6 +187,14 @@ public class FrMenu extends javax.swing.JFrame {
         });
         mnConsulta.add(mnConVendas);
 
+        mnConConsultas.setText("Consultas");
+        mnConConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConConsultasActionPerformed(evt);
+            }
+        });
+        mnConsulta.add(mnConConsultas);
+
         jMenuBar1.add(mnConsulta);
 
         mnItens.setText("Itens");
@@ -286,6 +303,16 @@ public class FrMenu extends javax.swing.JFrame {
         telaCadVenda.setVisible(true);
     }//GEN-LAST:event_mnCadVendaActionPerformed
 
+    private void mnConConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConConsultasActionPerformed
+        FrConConsultas telaConConsultas = new FrConConsultas(this, rootPaneCheckingEnabled);
+        
+        telaConConsultas.setVisible(true);
+    }//GEN-LAST:event_mnConConsultasActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setIconImage(Util.getIcone());
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -334,6 +361,7 @@ public class FrMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCadVenda;
     private javax.swing.JMenu mnCadastro;
     private javax.swing.JMenuItem mnConCliente;
+    private javax.swing.JMenuItem mnConConsultas;
     private javax.swing.JMenuItem mnConFuncionario;
     private javax.swing.JMenuItem mnConPet;
     private javax.swing.JMenuItem mnConVendas;

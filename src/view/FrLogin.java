@@ -2,6 +2,7 @@ package view;
 
 import controller.FuncionarioController;
 import javax.swing.JOptionPane;
+import utils.Util;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -42,6 +43,11 @@ public class FrLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tela de Login");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         pnlPrincipal.setBackground(new java.awt.Color(204, 204, 255));
         pnlPrincipal.setToolTipText("");
@@ -124,6 +130,10 @@ public class FrLogin extends javax.swing.JFrame {
     private void btnEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseClicked
         conectar();
     }//GEN-LAST:event_btnEntrarMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setIconImage(Util.getIcone());
+    }//GEN-LAST:event_formWindowOpened
 
   
         private boolean verificarCampos() {
